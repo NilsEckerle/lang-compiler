@@ -4,7 +4,7 @@ dyn half(dyn number) {
   return result;
 }
 
-int main(int argc, char *argv) {
+int main (int argc, char *argv[]) {
   let f = 1.2;
   let i = 5;
   let i2 = 4;

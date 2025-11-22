@@ -1,6 +1,6 @@
 #include <stdio.h> // use c library
 
-int main(int argc, char *argv) {
+int main (int argc, char *argv[]) {
   let n_times = 5; // type: const int
 
   for (let mut i = 0; i < 5; i++) { // type: mutable int
