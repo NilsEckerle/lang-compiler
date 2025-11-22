@@ -1,7 +1,8 @@
+#include "define.h"
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-  std::cout << "Hello from main.cpp!" << std::endl;
+  std::cout << MSG << std::endl;
 
   return 0;
 }
