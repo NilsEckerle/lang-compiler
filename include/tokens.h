@@ -11,7 +11,7 @@ enum token_e {
   // literals
   tok_id,
   tok_number,
-  tok_strig,
+  tok_string,
 
   // typing
   tok_let,
@@ -20,7 +20,7 @@ enum token_e {
 
   // types
   tok_short,
-  tok_int = 2,
+  tok_int,
   tok_long,
   tok_float,
   tok_double,
@@ -40,16 +40,14 @@ enum token_e {
   tok_minus,
   tok_star,
   tok_slash,
+  tok_percent,
 
   tok_assign,
-
   // logic
-  tok_eq,
-  tok_ne,
+  tok_questionmark,
+  tok_exclaimationmark,
   tok_lt,
   tok_gt,
-  tok_le,
-  tok_ge,
 
   // delimiters
   tok_lparen,
@@ -60,13 +58,15 @@ enum token_e {
   tok_rbrace,
 
   tok_semicolon,
-  tok_comma
+  tok_comma,
+  tok_dot
 };
 
 class token_t {
 public:
   token_t(token_e e_tok_type, std::string tp_val);
   ~token_t() = default;
+  std::string type_name();
 
 public:
   token_e e_tok_type;
