@@ -1,0 +1,51 @@
+flowchart TD
+    start(( )) --> lex_start
+
+    lex_start -->|=| lex_assign
+    lex_start -->|*| lex_mul
+    lex_start -->|/| lex_div
+    lex_start -->|+| lex_plus
+    lex_start -->|-| lex_minus
+    lex_start -->|<| lex_smaller
+    lex_start -->|>| lex_greater
+    lex_start -->|,| lex_start
+    lex_start -->|;| lex_start
+    lex_start -->|numeric| lex_number
+
+    lex_number -->|dot| lex_number_dot
+    lex_number -->|numeric| lex_number
+    lex_number -->|alphabetic| lex_undefined
+    lex_number -->|seperator| lex_start
+
+    lex_number_dot -->|dot| lex_undefined
+    lex_number_dot -->|numeric| lex_number_dot
+    lex_number_dot -->|seperator| lex_start
+
+    lex_assign -->|=| lex_start
+    lex_assign -->|numeric| lex_start
+    lex_assign -->|alphabetic| lex_start
+
+    lex_mul -->|=| lex_start
+    lex_mul -->|numeric| lex_start
+    lex_mul -->|alphabetic| lex_start
+
+    lex_div -->|=| lex_start
+    lex_div -->|numeric| lex_start
+    lex_div -->|alphabetic| lex_start
+
+    lex_plus -->|=| lex_start
+    lex_plus -->|numeric| lex_start
+    lex_plus -->|alphabetic| lex_start
+
+    lex_minu -->|=| lex_start
+    lex_minu -->|numeric| lex_start
+    lex_minu -->|alphabetic| lex_start
+
+    lex_smaller -->|=| lex_start
+    lex_smaller -->|numeric| lex_start
+    lex_smaller -->|alphabetic| lex_start
+
+    lex_greater -->|=| lex_start
+    lex_greater -->|numeric| lex_start
+    lex_greater -->|alphabetic| lex_start
+
