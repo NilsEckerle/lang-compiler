@@ -8,7 +8,7 @@ int main() {
       lexer::lex_file("examples/expressions.lang");
 
   for (lexer::token_t *tok : tokens) {
-    std::cout << tok->t_val;
+    lexer::debug_print(tok);
   }
   std::cout << std::endl;
 
