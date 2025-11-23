@@ -1,8 +1,16 @@
-#include "define.h"
+#include "lexer/lexer.h"
+#include "tokens.h"
 #include <iostream>
+#include <vector>
 
-int main(int argc, char *argv[]) {
-  std::cout << MSG << std::endl;
+int main() {
+  std::vector<lexer::token_t *> tokens =
+      lexer::lex_file("examples/expressions.lang");
+
+  for (lexer::token_t *tok : tokens) {
+    std::cout << tok->t_val;
+  }
+  std::cout << std::endl;
 
   return 0;
 }
