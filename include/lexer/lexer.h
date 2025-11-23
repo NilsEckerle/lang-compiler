@@ -8,15 +8,6 @@
 
 namespace lexer {
 
-#define I_BUFFER_SIZE 4096 /// 4KB chunks buffer size for reading files
-
-/**
- * @brief convert file to token
- * @param std::string t_input_file_path - file that gets converted
- * @return vector of tokens
- */
-std::vector<token_t *> lex_file(std::string t_input_file_path);
-
 enum lexer_state_e {
   lex_start,
   lex_undefined,
@@ -24,12 +15,18 @@ enum lexer_state_e {
 
 class lexer_t {
 public:
-  lexer_t() { this->e_state = lex_start; }
-  std::optional<token_t *> lex(char t_c);
+  lexer_t() = default;
+  std::vector<token_t *> lex(std::string source);
 
-public:
-  lexer_state_e e_state;
+private:
+  std::vector<token_t *> _t_tokens;
+  std::string _t_source;
+  int _position = 0;
 };
+
+std::vector<token_t *> lex_file(std::string t_input_file_path);
+
+void debug_print(token_t *token);
 
 } // namespace lexer
 
