@@ -1,4 +1,6 @@
-#include <stdio.h> // use c library
+// TODO: #include must be handled by preprocessor
+// TODO: implement preprocessor
+//#include <stdio.h> // use c library
 
 int main (int argc, char *argv[]) {
   let n_times = 5; // type: const int

@@ -14,4 +14,4 @@ int main (int argc, char *argv[]) {
   printf(f"{i2}/2={half(i2)}\n");
 
   return 0;
-}
+} // comment at end of file
