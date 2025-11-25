@@ -1,0 +1,14 @@
+// TODO: #include must be handled by preprocessor
+// TODO: implement preprocessor
+//#include <stdio.h> // use c library
+
+int main (int argc, char *argv[]) {
+  let n_times = 5; // type: const int
+
+  for (let mut i = 0; i < 5; i++) { // type: mutable int
+    printf("%d. Hello World\n", i+1);
+    printf(f"{i+1}. Hello World\n"); // possible with basic types like char, char*, short, int, long, float, int, bool
+  }
+
+  return 0;
+}
