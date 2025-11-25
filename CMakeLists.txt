@@ -5,6 +5,13 @@ project(MyProject VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Compiler warnings
+if(MSVC)
+    add_compile_options(/W4 /WX)
+else()
+    add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+endif()
+
 # Include directories
 include_directories(include)
 
@@ -50,7 +57,6 @@ add_executable(tests
     test/unittest/lexer.cpp
     test/moduletest/lexer.cpp
 )
-
 target_link_libraries(tests
     myproject_lib
     gtest
