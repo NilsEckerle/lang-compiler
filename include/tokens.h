@@ -6,14 +6,11 @@
 #include <string>
 namespace lexer {
 
+// order is inportant for regex matching
 enum token_e {
   // special
   tok_eof,
-
-  // literals
-  tok_id,
-  tok_number,
-  tok_string,
+  tok_comment,
 
   // typing
   tok_let,
@@ -66,13 +63,20 @@ enum token_e {
 
   tok_semicolon,
   tok_comma,
-  tok_dot
+  tok_dot,
+
+  // literals
+  tok_id,
+  tok_number,
+  tok_string
 };
 
 static std::map<token_e, std::regex> token_regex = {
     {tok_eof, std::regex("(?!)")},
+    {tok_comment, std::regex("//[^\r\n]*")},
 
     // Keywords (with word boundaries to avoid matching identifiers)
+    {tok_return, std::regex("\\breturn\\b")},
     {tok_let, std::regex("\\blet\\b")},
     {tok_mut, std::regex("\\bmut\\b")},
     {tok_dyn, std::regex("\\bdyn\\b")},
@@ -89,7 +93,6 @@ static std::map<token_e, std::regex> token_regex = {
     {tok_do, std::regex("\\bdo\\b")},
     {tok_while, std::regex("\\bwhile\\b")},
     {tok_for, std::regex("\\bfor\\b")},
-    {tok_return, std::regex("\\breturn\\b")},
 
     // Identifiers (check after keywords)
     {tok_id, std::regex("[a-zA-Z_][a-zA-Z_0-9]*")},

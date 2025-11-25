@@ -45,6 +45,7 @@ std::vector<token_t *> lexer_t::lex(std::string source) {
     }
 
     // parse token
+    bool token_found = false;
     for (std::pair<lexer::token_e, std::regex> pair : lexer::token_regex) {
       std::smatch match;
       std::regex reg = pair.second;
@@ -52,8 +53,12 @@ std::vector<token_t *> lexer_t::lex(std::string source) {
                             std::regex_constants::match_continuous)) {
         tokens.push_back(create_token_t(pair.first, match.str()));
         pos += match.length(0);
+        token_found = true;
         break;
       }
+    }
+    if (!token_found) {
+      std::cout << "no token found: " << rest << std::endl;
     }
   }
 

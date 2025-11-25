@@ -12,6 +12,8 @@ std::string token_t::type_name() {
   switch (this->e_tok_type) {
   case tok_eof:
     return "eof";
+  case tok_comment:
+    return "comment";
   case tok_id:
     return "id";
   case tok_number:
@@ -108,6 +110,7 @@ token_t *create_token_t(token_e e_tok_type, std::string t_val) {
   case tok_id:
   case tok_number:
   case tok_string:
+  case tok_comment:
     tok = new token_t(e_tok_type, t_val);
     break;
   default:
