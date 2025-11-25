@@ -30,6 +30,8 @@ std::string token_t::type_name() {
     return "int";
   case tok_long:
     return "long";
+  case tok_long_long:
+    return "longlong";
   case tok_float:
     return "float";
   case tok_double:
@@ -66,10 +68,18 @@ std::string token_t::type_name() {
     return "percent";
   case tok_assign:
     return "assign";
+  case tok_eq:
+    return "eq";
+  case tok_neq:
+    return "eq";
   case tok_lt:
     return "lt";
+  case tok_leq:
+    return "leq";
   case tok_gt:
     return "gt";
+  case tok_geq:
+    return "geq";
   case tok_lparen:
     return "lparen";
   case tok_rparen:
@@ -90,6 +100,21 @@ std::string token_t::type_name() {
     return "dot";
   }
   return "TOKEN NOT YET NAMED!!!";
+}
+
+token_t *create_token_t(token_e e_tok_type, std::string t_val) {
+  token_t *tok;
+  switch (e_tok_type) {
+  case tok_id:
+  case tok_number:
+  case tok_string:
+    tok = new token_t(e_tok_type, t_val);
+    break;
+  default:
+    tok = new token_t(e_tok_type, "");
+    break;
+  }
+  return tok;
 }
 
 } // namespace lexer
