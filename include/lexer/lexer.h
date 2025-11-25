@@ -2,16 +2,10 @@
 #define LEXER_H
 
 #include "tokens.h"
-#include <optional>
 #include <string>
 #include <vector>
 
 namespace lexer {
-
-enum lexer_state_e {
-  lex_start,
-  lex_undefined,
-};
 
 class lexer_t {
 public:

@@ -3,60 +3,62 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdio>
+#include <iostream>
+#include <ostream>
+#include <regex>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
 namespace lexer {
 
+std::string remainder(std::string str, int pos) { return str.substr(pos); }
+
+bool starts_with_whitespace(std::string str) {
+  if (str.length() <= 0) {
+    return false;
+  }
+
+  switch (str.c_str()[0]) {
+  case ' ':
+    return true;
+  case '\n':
+    return true;
+  case '\t':
+    return true;
+  }
+
+  return false;
+}
+
 std::vector<token_t *> lexer_t::lex(std::string source) {
-  printf("%s\n", source.c_str());
-  for (char c : source) {
-    switch (c) {
-    case ' ':
-      break;
-    case '=':
-      this->_t_tokens.push_back(new token_t(tok_assign, ""));
-      break;
-    case '!':
-      this->_t_tokens.push_back(new token_t(tok_exclaimationmark, ""));
-      break;
-    case '?':
-      this->_t_tokens.push_back(new token_t(tok_questionmark, ""));
-      break;
-    case '+':
-      this->_t_tokens.push_back(new token_t(tok_plus, ""));
-      break;
-    case '-':
-      this->_t_tokens.push_back(new token_t(tok_minus, ""));
-      break;
-    case '*':
-      this->_t_tokens.push_back(new token_t(tok_star, ""));
-      break;
-    case '/':
-      this->_t_tokens.push_back(new token_t(tok_slash, ""));
-      break;
-    case '%':
-      this->_t_tokens.push_back(new token_t(tok_percent, ""));
-      break;
-    case '<':
-      this->_t_tokens.push_back(new token_t(tok_lt, ""));
-      break;
-    case '>':
-      this->_t_tokens.push_back(new token_t(tok_gt, ""));
-      break;
-    case '.':
-      this->_t_tokens.push_back(new token_t(tok_dot, ""));
-      break;
-    case ',':
-      this->_t_tokens.push_back(new token_t(tok_comma, ""));
-      break;
-    case ';':
-      this->_t_tokens.push_back(new token_t(tok_semicolon, ""));
-      break;
+  size_t pos = 0;
+  std::vector<lexer::token_t *> tokens;
+
+  while (pos < source.length()) {
+    std::string rest = remainder(source, pos);
+
+    // remove whitespace
+    if (starts_with_whitespace(rest)) {
+      pos++;
+      continue;
+    }
+
+    // parse token
+    for (std::pair<lexer::token_e, std::regex> pair : lexer::token_regex) {
+      std::smatch match;
+      std::regex reg = pair.second;
+      if (std::regex_search(rest, match, reg,
+                            std::regex_constants::match_continuous)) {
+        tokens.push_back(create_token_t(pair.first, match.str()));
+        pos += match.length(0);
+        break;
+      }
     }
   }
-  return this->_t_tokens;
+
+  tokens.push_back(new token_t(tok_eof, ""));
+  return tokens;
 }
 
 std::vector<token_t *> lex_file(std::string t_input_file_path) {
