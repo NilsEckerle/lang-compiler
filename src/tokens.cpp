@@ -26,6 +26,10 @@ std::string token_t::type_name() {
     return "mut";
   case tok_dyn:
     return "dyn";
+  case tok_static:
+    return "static";
+  case tok_typedef:
+    return "typedef";
   case tok_short:
     return "short";
   case tok_int:
@@ -42,10 +46,24 @@ std::string token_t::type_name() {
     return "char";
   case tok_bool:
     return "bool";
+  case tok_void:
+    return "void";
+  case tok_enum:
+    return "enum";
+  case tok_struct:
+    return "struct";
+  case tok_union:
+    return "union";
   case tok_if:
     return "if";
   case tok_else:
     return "else";
+  case tok_switch:
+    return "switch";
+  case tok_case:
+    return "case";
+  case tok_default:
+    return "default";
   case tok_questionmark:
     return "questionmark";
   case tok_exclaimationmark:
@@ -56,6 +74,10 @@ std::string token_t::type_name() {
     return "while";
   case tok_for:
     return "for";
+  case tok_break:
+    return "break";
+  case tok_continue:
+    return "continue";
   case tok_return:
     return "return";
   case tok_plus:
@@ -66,6 +88,8 @@ std::string token_t::type_name() {
     return "star";
   case tok_slash:
     return "slash";
+  case tok_char_literal:
+    return "char_literal";
   case tok_percent:
     return "percent";
   case tok_assign:
@@ -73,7 +97,7 @@ std::string token_t::type_name() {
   case tok_eq:
     return "eq";
   case tok_neq:
-    return "eq";
+    return "neq";
   case tok_lt:
     return "lt";
   case tok_leq:
@@ -96,6 +120,8 @@ std::string token_t::type_name() {
     return "rbrace";
   case tok_semicolon:
     return "semicolon";
+  case tok_colon:
+    return "colon";
   case tok_comma:
     return "comma";
   case tok_dot:
