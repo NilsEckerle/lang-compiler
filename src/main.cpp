@@ -42,7 +42,7 @@ void run_compiler(std::vector<std::string> source_files) {
     std::vector<lexer::token_t *> tokens = lexer::lex_file(source_path);
     spdlog::info("Lexing finished");
     // parse
-    parser::syntax_tree_t *tree = parser::parse_tokens(tokens);
+    // parser::syntax_tree_t *tree = parser::parse_tokens(tokens);
     spdlog::info("Parsing finished");
     // Code generation finished
 
@@ -59,12 +59,13 @@ void run_compiler(std::vector<std::string> source_files) {
     std::cout << std::endl;
 
     // debug print syntax_tree
-    std::cout << tree->to_prefix_notation() << std::endl;
+    // std::cout << tree->to_prefix_notation() << std::endl;
   }
 }
 
 int main(int argc, char *argv[]) {
   setup_spdlog();
+
   argparse::ArgumentParser program = argparse::ArgumentParser("lang");
   setup_argpars(argc, argv, &program);
 
