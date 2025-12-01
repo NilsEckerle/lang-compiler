@@ -26,6 +26,14 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(argparse)
 
+# Fetch spdlog
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG v1.16.0
+)
+FetchContent_MakeAvailable(spdlog)
+
 # Fetch Google Test
 FetchContent_Declare(
     googletest
@@ -37,8 +45,10 @@ FetchContent_MakeAvailable(googletest)
 
 # Create a library with your core source files
 add_library(myproject_lib
-    src/lexer/lexer.cpp
     src/tokens.cpp
+    src/lexer/lexer.cpp
+    src/parser/parser.cpp
+    src/parser/syntax_tree.cpp
 )
 
 # Main executable
@@ -46,8 +56,9 @@ add_executable(main
     src/main.cpp
 )
 
-# Link library and argparse to main executable
+# Link to main executable
 target_link_libraries(main PRIVATE myproject_lib argparse)
+target_link_libraries(main PRIVATE myproject_lib spdlog)
 
 # Enable testing
 enable_testing()
