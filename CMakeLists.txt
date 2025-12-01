@@ -72,6 +72,7 @@ target_link_libraries(tests
     myproject_lib
     gtest
     gtest_main
+    fmt
 )
 
 # Discover tests
