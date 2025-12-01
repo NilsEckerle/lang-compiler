@@ -1,0 +1,144 @@
+// Type definitions
+typedef int integer;
+static int global_counter = 0;
+
+// Enum definition
+enum color_e {
+  RED,
+  GREEN,
+  BLUE
+};
+
+// Struct definition
+struct point_s {
+  float x;
+  float y;
+};
+
+// Union definition
+union data_u {
+  int i;
+  float f;
+  char c;
+};
+
+// Function with dynamic typing
+dyn calculate(dyn a, dyn b) {
+  let result = a + b - a * b / (a % b);
+  return result;
+}
+
+// Function demonstrating type qualifiers
+int process(let x, mut y) {
+  // Primitive types demonstration
+  bool flag = true;
+  char letter = 'A';
+  short small_num = 100;
+  int number = 1000;
+  long big_num = 100000;
+  long long huge_num = 10000000000;
+  float decimal = 3.14;
+  double precise = 2.718281828;
+  
+  // Arithmetic operators
+  let sum = x + y;
+  let diff = x - y;
+  let prod = x * y;
+  let quot = x / y;
+  let mod = x % y;
+  
+  // Assignment
+  y = sum;
+  
+  // Comparison operators
+  if (x < y) {
+    return -1;
+  }
+  if (x <= y) {
+    return -1;
+  }
+  if (x > y) {
+    return 1;
+  }
+  if (x >= y) {
+    return 1;
+  }
+  if (x == y) {
+    return 0;
+  }
+  if (x != y) {
+    return 2;
+  }
+  
+  // Logical operators
+  let is_valid = !flag;
+  let choice = flag ? 1 : 0;
+  
+  return 0;
+}
+
+int main(int argc, char *argv[]) {
+  // Array and struct usage
+  int numbers[5];
+  struct point_s p;
+  p.x = 1.5;
+  p.y = 2.5;
+  
+  // String literal
+  let message = "Hello, World!";
+  
+  // Number literals
+  let integer_val = 42;
+  let float_val = 3.14159;
+  let decimal_only = .5;
+  
+  // Switch statement
+  let value = 2;
+  switch (value) {
+    case 1:
+      printf("One\n");
+      break;
+    case 2:
+      printf("Two\n");
+      break;
+    default:
+      printf("Other\n");
+      break;
+  }
+  
+  // While loop
+  let mut i = 0;
+  while (i < 5) {
+    i = i + 1;
+    if (i == 3) {
+      continue;
+    }
+    printf("%d\n", i);
+  }
+  
+  // Do-while loop
+  do {
+    i = i - 1;
+  } while (i > 0);
+  
+  // For loop
+  for (let mut j = 0; j < 10; j = j + 1) {
+    if (j == 8) {
+      break;
+    }
+    numbers[j] = j * 2;
+  }
+  
+  // Function call with parentheses, brackets, braces
+  let result = calculate(10, 5);
+  
+  // Comma separated expressions
+  printf("Result: %d, Value: %d\n", result, value);
+  
+  // Early return with else
+  if (result < 0) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
