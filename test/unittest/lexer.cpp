@@ -159,8 +159,7 @@ TEST_F(lexer_unit_test, lex) {
     lexer::token_t *tok = tokens[tokens.size() - 1];
     tokens.pop_back();
 
-    std::cout << exp->type_name() << " " << tok->type_name() << " "
-              << exp->t_val << " " << tok->t_val << std::endl;
+    std::cout << exp->type_name() << " " << tok->type_name() << std::endl;
 
     EXPECT_EQ(tok->e_tok_type, exp->e_tok_type);
     EXPECT_EQ(tok->t_val, exp->t_val);
