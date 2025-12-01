@@ -28,10 +28,10 @@ protected:
 // (happens when token_e order is wrong)
 TEST_F(lexer_unit_test, lex_return_order) {
   std::vector<lexer::token_t *> expected;
-  expected.push_back(lexer::create_token_t(lexer::tok_return, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_number, "0"));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_eof, ""));
+  expected.push_back(lexer::create_token_t(lexer::tok_return, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_number, "0", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_eof, "", 1));
 
   std::vector<lexer::token_t *> tokens = this->tp_lexer->lex("return 0;");
 
@@ -70,82 +70,83 @@ TEST_F(lexer_unit_test, lex) {
   // expected
   std::vector<lexer::token_t *> expected;
 
-  expected.push_back(lexer::create_token_t(lexer::tok_dyn, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "half"));
-  expected.push_back(lexer::create_token_t(lexer::tok_lparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_dyn, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "number"));
-  expected.push_back(lexer::create_token_t(lexer::tok_rparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_lbrace, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_let, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "result"));
-  expected.push_back(lexer::create_token_t(lexer::tok_assign, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "number"));
-  expected.push_back(lexer::create_token_t(lexer::tok_slash, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_number, "2"));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
+  expected.push_back(lexer::create_token_t(lexer::tok_dyn, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "half", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_lparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_dyn, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "number", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_rparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_lbrace, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_let, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "result", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_assign, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "number", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_slash, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_number, "2", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
   expected.push_back(lexer::create_token_t(
-      lexer::tok_comment, "// type: can be short, int, long, float, double"));
-  expected.push_back(lexer::create_token_t(lexer::tok_return, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "result"));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_rbrace, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_int, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "main"));
-  expected.push_back(lexer::create_token_t(lexer::tok_lparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_int, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "argc"));
-  expected.push_back(lexer::create_token_t(lexer::tok_comma, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_char, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_star, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "argv"));
-  expected.push_back(lexer::create_token_t(lexer::tok_lbracket, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_rbracket, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_rparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_lbrace, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_let, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "f"));
-  expected.push_back(lexer::create_token_t(lexer::tok_assign, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_number, "1.2"));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_let, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "i"));
-  expected.push_back(lexer::create_token_t(lexer::tok_assign, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_number, "5"));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_let, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "i2"));
-  expected.push_back(lexer::create_token_t(lexer::tok_assign, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_number, "4"));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "printf"));
-  expected.push_back(lexer::create_token_t(lexer::tok_lparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "f"));
+      lexer::tok_comment, "// type: can be short, int, long, float, double",
+      1));
+  expected.push_back(lexer::create_token_t(lexer::tok_return, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "result", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_rbrace, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_int, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "main", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_lparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_int, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "argc", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_comma, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_char, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_star, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "argv", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_lbracket, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_rbracket, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_rparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_lbrace, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_let, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "f", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_assign, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_number, "1.2", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_let, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "i", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_assign, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_number, "5", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_let, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "i2", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_assign, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_number, "4", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "printf", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_lparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "f", 1));
   expected.push_back(
-      lexer::create_token_t(lexer::tok_string, "\"{f}/2={half(f)}\\n\""));
-  expected.push_back(lexer::create_token_t(lexer::tok_rparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "printf"));
-  expected.push_back(lexer::create_token_t(lexer::tok_lparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "f"));
+      lexer::create_token_t(lexer::tok_string, "\"{f}/2={half(f)}\\n\"", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_rparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "printf", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_lparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "f", 1));
   expected.push_back(
-      lexer::create_token_t(lexer::tok_string, "\"{i}/2={half(i)}\\n\""));
-  expected.push_back(lexer::create_token_t(lexer::tok_rparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "printf"));
-  expected.push_back(lexer::create_token_t(lexer::tok_lparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_id, "f"));
+      lexer::create_token_t(lexer::tok_string, "\"{i}/2={half(i)}\\n\"", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_rparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "printf", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_lparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_id, "f", 1));
   expected.push_back(
-      lexer::create_token_t(lexer::tok_string, "\"{i2}/2={half(i2)}\\n\""));
-  expected.push_back(lexer::create_token_t(lexer::tok_rparen, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_return, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_number, "0"));
-  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, ""));
-  expected.push_back(lexer::create_token_t(lexer::tok_rbrace, ""));
-  expected.push_back(
-      lexer::create_token_t(lexer::tok_comment, "// comment at end of file"));
-  expected.push_back(lexer::create_token_t(lexer::tok_eof, ""));
+      lexer::create_token_t(lexer::tok_string, "\"{i2}/2={half(i2)}\\n\"", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_rparen, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_return, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_number, "0", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_semicolon, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_rbrace, "", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_comment,
+                                           "// comment at end of file", 1));
+  expected.push_back(lexer::create_token_t(lexer::tok_eof, "", 1));
 
   // execute test
   std::vector<lexer::token_t *> tokens = this->tp_lexer->lex(source);
