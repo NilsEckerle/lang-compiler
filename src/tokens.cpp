@@ -3,9 +3,10 @@
 
 namespace lexer {
 
-token_t::token_t(token_e e_tok_type, std::string t_val) {
+token_t::token_t(token_e e_tok_type, std::string t_val, int linenumber) {
   this->e_tok_type = e_tok_type;
   this->t_val = t_val;
+  this->linenumber = linenumber;
 }
 
 std::string token_t::type_name() {
@@ -130,17 +131,17 @@ std::string token_t::type_name() {
   return "TOKEN NOT YET NAMED!!!";
 }
 
-token_t *create_token_t(token_e e_tok_type, std::string t_val) {
+token_t *create_token_t(token_e e_tok_type, std::string t_val, int linenumber) {
   token_t *tok;
   switch (e_tok_type) {
   case tok_id:
   case tok_number:
   case tok_string:
   case tok_comment:
-    tok = new token_t(e_tok_type, t_val);
+    tok = new token_t(e_tok_type, t_val, linenumber);
     break;
   default:
-    tok = new token_t(e_tok_type, "");
+    tok = new token_t(e_tok_type, "", linenumber);
     break;
   }
   return tok;

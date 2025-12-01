@@ -181,16 +181,17 @@ static std::map<token_e, std::regex> token_regex = {
 
 class token_t {
 public:
-  token_t(token_e e_tok_type, std::string tp_val);
+  token_t(token_e e_tok_type, std::string tp_val, int linenumber);
   ~token_t() = default;
   std::string type_name();
 
 public:
   token_e e_tok_type;
   std::string t_val;
+  int linenumber;
 };
 
-token_t *create_token_t(token_e e_tok_type, std::string t_val);
+token_t *create_token_t(token_e e_tok_type, std::string t_val, int linenumber);
 
 } // namespace lexer
 

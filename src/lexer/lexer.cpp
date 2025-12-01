@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdio>
+#include <fmt/format.h>
 #include <iostream>
 #include <ostream>
 #include <regex>
@@ -14,7 +15,7 @@ namespace lexer {
 
 std::string remainder(std::string str, int pos) { return str.substr(pos); }
 
-bool starts_with_whitespace(std::string str) {
+bool starts_with_whitespace(std::string str, int *current_linenumber) {
   if (str.length() <= 0) {
     return false;
   }
@@ -23,6 +24,7 @@ bool starts_with_whitespace(std::string str) {
   case ' ':
     return true;
   case '\n':
+    (*current_linenumber)++;
     return true;
   case '\t':
     return true;
@@ -30,6 +32,10 @@ bool starts_with_whitespace(std::string str) {
 
   return false;
 }
+
+lexer_t::lexer_t() { this->current_linenumber = 1; }
+
+int lexer_t::get_linenumber() { return this->current_linenumber; }
 
 std::vector<token_t *> lexer_t::lex(std::string source) {
   size_t pos = 0;
@@ -39,7 +45,7 @@ std::vector<token_t *> lexer_t::lex(std::string source) {
     std::string rest = remainder(source, pos);
 
     // remove whitespace
-    if (starts_with_whitespace(rest)) {
+    if (starts_with_whitespace(rest, &(this->current_linenumber))) {
       pos++;
       continue;
     }
@@ -51,7 +57,8 @@ std::vector<token_t *> lexer_t::lex(std::string source) {
       std::regex reg = pair.second;
       if (std::regex_search(rest, match, reg,
                             std::regex_constants::match_continuous)) {
-        tokens.push_back(create_token_t(pair.first, match.str()));
+        tokens.push_back(
+            create_token_t(pair.first, match.str(), this->get_linenumber()));
         pos += match.length(0);
         token_found = true;
         break;
@@ -62,7 +69,7 @@ std::vector<token_t *> lexer_t::lex(std::string source) {
     }
   }
 
-  tokens.push_back(new token_t(tok_eof, ""));
+  tokens.push_back(new token_t(tok_eof, "", this->get_linenumber()));
   return tokens;
 }
 
@@ -95,8 +102,15 @@ std::vector<token_t *> lex_file(std::string t_input_file_path) {
   return tokens;
 }
 
-void debug_print(token_t *token) {
-  printf("%s (%s)\n", token->type_name().c_str(), token->t_val.c_str());
+std::string debug_tok(token_t *token) {
+  std::string s;
+  if (token->t_val == "") {
+    s = fmt::format("<{}>", token->type_name().c_str());
+  } else {
+    s = fmt::format("<{}, ({})>", token->type_name().c_str(),
+                    token->t_val.c_str());
+  }
+  return s;
 }
 
 } // namespace lexer
