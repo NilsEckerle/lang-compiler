@@ -53,8 +53,14 @@ void run_compiler(std::vector<std::string> source_files) {
     //
     // debug print tokens
     std::cout << source_path << std::endl;
+    int current_linenumber = 1;
     for (lexer::token_t *tok : tokens) {
-      lexer::debug_print(tok);
+      if (current_linenumber != tok->linenumber) {
+        std::cout << std::endl;
+        current_linenumber = tok->linenumber;
+      }
+      std::string s = lexer::debug_tok(tok);
+      std::cout << s << " ";
     }
     std::cout << std::endl;
 
