@@ -3,13 +3,12 @@
 
 #include "parser/syntax_tree.h"
 #include "tokens.h"
-#include <string>
 #include <vector>
 namespace parser {
 
 class parser_t {};
 
-syntax_tree_t *parse_tokens(std::vector<lexer::token_t *> tokens);
+ast::syntax_tree_t *parse_tokens(std::vector<lexer::token_t *> tokens);
 
 } // namespace parser
 
