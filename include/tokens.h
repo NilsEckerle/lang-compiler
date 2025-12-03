@@ -4,6 +4,7 @@
 #include <map>
 #include <regex>
 #include <string>
+#include <tuple>
 namespace lexer {
 
 // order is inportant for regex matching
@@ -178,6 +179,114 @@ static std::map<token_e, std::regex> token_regex = {
     {tok_colon, std::regex(":")},
     {tok_dot, std::regex("\\.")},
 };
+
+/** @brief definition of precidence levels
+ *
+ * @note Precedence hierarchy (C-style operator precedence):
+ *
+ * 0-10: Lowest (comma, assignment, ternary)
+ * 20-30: Assignment operators
+ * 40-49: Comparison/relational
+ * 50-59: Addition/subtraction
+ * 55-59: Multiplication/division/modulo
+ * 60-69: Unary operators
+ * 70-79: Array subscript
+ * 80-89: Member access (highest binary)
+ * 100: Atomic values (literals, identifiers)
+ *
+ * For right-associative operators (like = and ?:), rbp < lbp ensures
+ * right-to-left grouping.*/
+static std::map<token_e, std::tuple<int, int>> token_presidence = {
+    {tok_eof, std::tuple<int, int>(0, 0)},
+    {tok_comment, std::tuple<int, int>(0, 0)},
+
+    // Keywords - Type qualifiers
+    {tok_let, std::tuple<int, int>(0, 0)},
+    {tok_mut, std::tuple<int, int>(0, 0)},
+    {tok_dyn, std::tuple<int, int>(0, 0)},
+    {tok_static, std::tuple<int, int>(0, 0)},
+    {tok_typedef, std::tuple<int, int>(0, 0)},
+
+    // Keywords - Primitive types
+    {tok_bool, std::tuple<int, int>(0, 100)},
+    {tok_char, std::tuple<int, int>(0, 100)},
+    {tok_short, std::tuple<int, int>(0, 100)},
+    {tok_int, std::tuple<int, int>(0, 100)},
+    {tok_long_long, std::tuple<int, int>(0, 100)},
+    {tok_long, std::tuple<int, int>(0, 100)},
+    {tok_float, std::tuple<int, int>(0, 100)},
+    {tok_double, std::tuple<int, int>(0, 100)},
+    {tok_void, std::tuple<int, int>(0, 100)},
+
+    // Keywords - Complex types
+    {tok_enum, std::tuple<int, int>(0, 100)},
+    {tok_struct, std::tuple<int, int>(0, 100)},
+    {tok_union, std::tuple<int, int>(0, 100)},
+
+    // Keywords - Control flow
+    {tok_if, std::tuple<int, int>(0, 100)},
+    {tok_else, std::tuple<int, int>(0, 100)},
+    {tok_switch, std::tuple<int, int>(0, 100)},
+    {tok_case, std::tuple<int, int>(0, 100)},
+    {tok_default, std::tuple<int, int>(0, 100)},
+    {tok_for, std::tuple<int, int>(0, 100)},
+    {tok_while, std::tuple<int, int>(0, 100)},
+    {tok_do, std::tuple<int, int>(0, 100)},
+    {tok_break, std::tuple<int, int>(100, 0)},
+    {tok_continue, std::tuple<int, int>(100, 0)},
+    {tok_return, std::tuple<int, int>(100, 100)},
+
+    // Identifiers
+    {tok_id, std::tuple<int, int>(0, 100)},
+
+    // Literals
+    {tok_number, std::tuple<int, int>(0, 100)},
+    {tok_string, std::tuple<int, int>(0, 100)},
+    {tok_char_literal, std::tuple<int, int>(0, 100)},
+
+    // Two-character operators
+    {tok_leq, std::tuple<int, int>(40, 41)},
+    {tok_geq, std::tuple<int, int>(40, 41)},
+    {tok_eq, std::tuple<int, int>(40, 41)},
+    {tok_neq, std::tuple<int, int>(40, 41)},
+
+    // Operators - Arithmetic
+    {tok_plus, std::tuple<int, int>(50, 51)},
+    {tok_minus, std::tuple<int, int>(50, 51)},
+    {tok_star, std::tuple<int, int>(55, 56)},
+    {tok_slash, std::tuple<int, int>(55, 56)},
+    {tok_percent, std::tuple<int, int>(55, 56)},
+
+    // Operators - Assignment (right-associative)
+    {tok_assign, std::tuple<int, int>(20, 19)},
+
+    // Operators - Comparison
+    {tok_lt, std::tuple<int, int>(40, 41)},
+    {tok_gt, std::tuple<int, int>(40, 41)},
+
+    // Operators - Logical
+    {tok_exclaimationmark, std::tuple<int, int>(0, 60)}, // prefix unary
+    {tok_questionmark, std::tuple<int, int>(15, 14)}, // ternary (right-assoc)
+
+    // Delimiters
+    {tok_lparen, std::tuple<int, int>(0, 100)},
+    {tok_rparen, std::tuple<int, int>(100, 0)},
+    {tok_lbrace, std::tuple<int, int>(0, 100)},
+    {tok_rbrace, std::tuple<int, int>(100, 0)},
+    {tok_lbracket, std::tuple<int, int>(70, 71)}, // array subscript
+    {tok_rbracket, std::tuple<int, int>(100, 0)},
+
+    // Delimiters - Punctuation
+    {tok_comma, std::tuple<int, int>(10, 11)},
+    {tok_semicolon, std::tuple<int, int>(0, 0)},
+    {tok_colon, std::tuple<int, int>(5, 6)},
+    {tok_dot,
+     std::tuple<int, int>(80, 81)}, // member access (highest precedence)
+};
+
+int get_left_precidence(token_e tok);
+
+int get_right_precidence(token_e tok);
 
 class token_t {
 public:

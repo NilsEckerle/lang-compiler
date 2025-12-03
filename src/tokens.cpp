@@ -131,6 +131,18 @@ std::string token_t::type_name() {
   return "TOKEN NOT YET NAMED!!!";
 }
 
+int get_left_precidence(token_e tok) {
+  int lh, rh;
+  std::tie(lh, rh) = token_presidence[tok];
+  return lh;
+}
+
+int get_right_precidence(token_e tok) {
+  int lh, rh;
+  std::tie(lh, rh) = token_presidence[tok];
+  return rh;
+}
+
 token_t *create_token_t(token_e e_tok_type, std::string t_val, int linenumber) {
   token_t *tok;
   switch (e_tok_type) {
