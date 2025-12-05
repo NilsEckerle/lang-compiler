@@ -49,7 +49,9 @@ add_library(myproject_lib
     src/lexer/lexer.cpp
     src/parser/parser.cpp
     src/parser/syntax_tree.cpp
+    src/parser/expression.cpp
 )
+target_link_libraries(myproject_lib PUBLIC spdlog)
 
 # Main executable
 add_executable(main
@@ -58,7 +60,6 @@ add_executable(main
 
 # Link to main executable
 target_link_libraries(main PRIVATE myproject_lib argparse)
-target_link_libraries(main PRIVATE myproject_lib spdlog)
 
 # Enable testing
 enable_testing()
@@ -67,12 +68,12 @@ enable_testing()
 add_executable(tests
     test/unittest/lexer.cpp
     test/moduletest/lexer.cpp
+    test/unittest/expression.cpp
 )
 target_link_libraries(tests
     myproject_lib
-    gtest
     gtest_main
-    fmt
+    spdlog
 )
 
 # Discover tests
