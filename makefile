@@ -1,5 +1,7 @@
 .PHONY: test build clean setup run
 
+JOBS := $(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
+
 default: build
 
 setup:
@@ -9,7 +11,7 @@ clean:
 	rm -rf build
 
 build: setup
-	cd build && cmake .. && cmake --build .
+	cd build && cmake .. && cmake --build . -j$(JOBS)
 
 rebuild: clean build
 
@@ -21,8 +23,7 @@ run: build
 	./build/main $(ARGS)
 
 debug: setup
-	cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
+	cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build . -j$(JOBS)
 
 release: setup
-	cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build .
-
+	cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . -j$(JOBS)
