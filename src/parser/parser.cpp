@@ -7,7 +7,7 @@
 namespace parser {
 
 syntax_tree_t *parse_tokens(std::vector<lexer::token_t *> tokens) {
-  tokens = tokens;
+  (void)tokens;
   throw std::runtime_error("parse_tokens Not yet implemented!");
   return new syntax_tree_t;
 }
