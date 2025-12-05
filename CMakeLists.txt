@@ -69,6 +69,7 @@ add_executable(tests
     test/unittest/lexer.cpp
     test/moduletest/lexer.cpp
     test/unittest/expression.cpp
+    test/unittest/parser.cpp
 )
 target_link_libraries(tests
     myproject_lib
