@@ -3,7 +3,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdio>
-#include <fmt/format.h>
+#include <spdlog/fmt/fmt.h>
 #include <iostream>
 #include <ostream>
 #include <regex>

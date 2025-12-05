@@ -16,7 +16,7 @@ public:
 private:
   std::vector<token_t *> _t_tokens;
   std::string _t_source;
-  int _position = 0;
+  // int _position = 0;
   int current_linenumber;
 };
 
