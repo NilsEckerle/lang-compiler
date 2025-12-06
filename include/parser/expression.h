@@ -29,7 +29,9 @@ struct binary_expr_t {
 };
 
 namespace debug {
+
 std::string expression_to_string(const expression_t &expression);
+
 }
 } // namespace expression
 } // namespace parser

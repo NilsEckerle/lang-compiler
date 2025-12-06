@@ -34,7 +34,7 @@ TEST_F(parser_unit_test, parse_expression) {
 
   std::string expected = "(+ 3 (* 4 5))";
 
-  parser::ast::syntax_tree_t *tree = parser::parse_expression(tokens);
+  parser::ast::syntax_tree_t *tree = parser::parse_tokens(tokens);
 
   ASSERT_EQ(expected, tree->to_prefix_notation());
 }
