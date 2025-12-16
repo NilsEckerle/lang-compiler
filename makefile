@@ -16,7 +16,7 @@ build: setup
 rebuild: clean build
 
 test: build
-	cd build && ctest --output-on-failure
+	cd build && GTEST_COLOR=1 ctest --output-on-failure
 
 run: build
 	@echo
