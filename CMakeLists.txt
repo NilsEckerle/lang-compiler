@@ -4,6 +4,7 @@ project(MyProject VERSION 1.0)
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS_DEBUG "-g -O0" CACHE STRING "Debug flags" FORCE)
 
 # Compiler warnings
 if(MSVC)
@@ -48,8 +49,10 @@ add_library(myproject_lib
     src/tokens.cpp
     src/lexer/lexer.cpp
     src/parser/parser.cpp
+    src/parser/pratt_parser.cpp
     src/parser/syntax_tree.cpp
-    src/parser/expression.cpp
+    src/parser/abstract_syntax_tree.cpp
+    src/symbol_table.cpp
 )
 target_link_libraries(myproject_lib PUBLIC spdlog)
 
@@ -59,18 +62,25 @@ add_executable(main
 )
 
 # Link to main executable
-target_link_libraries(main PRIVATE myproject_lib argparse)
+target_link_libraries(main PRIVATE myproject_lib argparse fmt)
+# target_link_libraries(main PRIVATE myproject_lib fmt)
 
-# Enable testing
+# # Enable testing
 enable_testing()
 
 # Test executable
 add_executable(tests
-    test/unittest/lexer.cpp
-    test/moduletest/lexer.cpp
-    test/unittest/expression.cpp
+    # test/unittest/tokens.cpp
+    # test/unittest/lexer.cpp
+    # test/moduletest/lexer.cpp
     test/unittest/parser.cpp
+    test/unittest/pratt_parser.cpp
 )
+
+target_compile_options(tests PRIVATE
+    $<$<CONFIG:Debug>:-g3 -O0 -ggdb>
+)
+
 target_link_libraries(tests
     myproject_lib
     gtest_main
