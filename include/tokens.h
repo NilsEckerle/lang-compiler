@@ -5,8 +5,8 @@
 #include <regex>
 #include <string>
 #include <tuple>
-namespace lexer {
 
+namespace compiler {
 // order is inportant for regex matching
 enum token_e {
   // Special tokens
@@ -14,39 +14,39 @@ enum token_e {
   tok_comment,
 
   // Keywords - Type qualifiers
-  tok_let,
-  tok_mut,
-  tok_dyn,
-  tok_static,
-  tok_typedef,
+  // tok_let,
+  // tok_mut,
+  // tok_dyn,
+  // tok_static,
+  // tok_typedef,
 
   // Keywords - Primitive types
   tok_bool,
   tok_char,
-  tok_short,
+  // tok_short,
   tok_int,
-  tok_long,
-  tok_long_long,
+  // tok_long,
+  // tok_long_long,
   tok_float,
-  tok_double,
+  // tok_double,
   tok_void,
 
   // Keywords - Complex types
-  tok_enum,
-  tok_struct,
-  tok_union,
+  // tok_enum,
+  // tok_struct,
+  // tok_union,
 
   // Keywords - Control flow
   tok_if,
   tok_else,
-  tok_switch,
-  tok_case,
-  tok_default,
-  tok_for,
+  // tok_switch,
+  // tok_case,
+  // tok_default,
+  // tok_for,
   tok_while,
-  tok_do,
-  tok_break,
-  tok_continue,
+  // tok_do,
+  // tok_break,
+  // tok_continue,
   tok_return,
 
   // Operators - Arithmetic
@@ -54,7 +54,7 @@ enum token_e {
   tok_minus,
   tok_star,
   tok_slash,
-  tok_percent,
+  // tok_percent,
 
   // Operators - Assignment
   tok_assign,
@@ -69,7 +69,7 @@ enum token_e {
 
   // Operators - Logical
   tok_exclaimationmark,
-  tok_questionmark,
+  // tok_questionmark,
 
   // Delimiters - Parentheses and brackets
   tok_lparen,
@@ -83,7 +83,7 @@ enum token_e {
   tok_comma,
   tok_semicolon,
   tok_colon,
-  tok_dot,
+  // tok_dot,
 
   // Literals and identifiers
   tok_id,
@@ -97,40 +97,40 @@ static std::map<token_e, std::regex> token_regex = {
     {tok_comment, std::regex("//[^\r\n]*")},
 
     // Keywords - Type qualifiers (with word boundaries)
-    {tok_let, std::regex("\\blet\\b")},
-    {tok_mut, std::regex("\\bmut\\b")},
-    {tok_dyn, std::regex("\\bdyn\\b")},
-    {tok_static, std::regex("\\bstatic\\b")},
-    {tok_typedef, std::regex("\\btypedef\\b")},
+    // {tok_let, std::regex("\\blet\\b")},
+    // {tok_mut, std::regex("\\bmut\\b")},
+    // {tok_dyn, std::regex("\\bdyn\\b")},
+    // {tok_static, std::regex("\\bstatic\\b")},
+    // {tok_typedef, std::regex("\\btypedef\\b")},
 
     // Keywords - Primitive types
     {tok_bool, std::regex("\\bbool\\b")},
     {tok_char, std::regex("\\bchar\\b")},
-    {tok_short, std::regex("\\bshort\\b")},
+    // {tok_short, std::regex("\\bshort\\b")},
     {tok_int, std::regex("\\bint\\b")},
-    {tok_long_long,
-     std::regex("\\blong\\s+long\\b")}, // Must come before tok_long
-    {tok_long, std::regex("\\blong\\b")},
+    // {tok_long_long,
+    //  std::regex("\\blong\\s+long\\b")}, // Must come before tok_long
+    // {tok_long, std::regex("\\blong\\b")},
     {tok_float, std::regex("\\bfloat\\b")},
-    {tok_double, std::regex("\\bdouble\\b")},
+    // {tok_double, std::regex("\\bdouble\\b")},
     {tok_void, std::regex("\\bvoid\\b")},
 
     // Keywords - Complex types
-    {tok_enum, std::regex("\\benum\\b")},
-    {tok_struct, std::regex("\\bstruct\\b")},
-    {tok_union, std::regex("\\bunion\\b")},
+    // {tok_enum, std::regex("\\benum\\b")},
+    // {tok_struct, std::regex("\\bstruct\\b")},
+    // {tok_union, std::regex("\\bunion\\b")},
 
     // Keywords - Control flow
     {tok_if, std::regex("\\bif\\b")},
     {tok_else, std::regex("\\belse\\b")},
-    {tok_switch, std::regex("\\bswitch\\b")},
-    {tok_case, std::regex("\\bcase\\b")},
-    {tok_default, std::regex("\\bdefault\\b")},
-    {tok_for, std::regex("\\bfor\\b")},
+    // {tok_switch, std::regex("\\bswitch\\b")},
+    // {tok_case, std::regex("\\bcase\\b")},
+    // {tok_default, std::regex("\\bdefault\\b")},
+    // {tok_for, std::regex("\\bfor\\b")},
     {tok_while, std::regex("\\bwhile\\b")},
-    {tok_do, std::regex("\\bdo\\b")},
-    {tok_break, std::regex("\\bbreak\\b")},
-    {tok_continue, std::regex("\\bcontinue\\b")},
+    // {tok_do, std::regex("\\bdo\\b")},
+    // {tok_break, std::regex("\\bbreak\\b")},
+    // {tok_continue, std::regex("\\bcontinue\\b")},
     {tok_return, std::regex("\\breturn\\b")},
 
     // Identifiers (must come after all keywords)
@@ -152,7 +152,7 @@ static std::map<token_e, std::regex> token_regex = {
     {tok_minus, std::regex("\\-")},
     {tok_star, std::regex("\\*")},
     {tok_slash, std::regex("/")},
-    {tok_percent, std::regex("%")},
+    // {tok_percent, std::regex("%")},
 
     // Operators - Assignment
     {tok_assign, std::regex("=")},
@@ -163,7 +163,7 @@ static std::map<token_e, std::regex> token_regex = {
 
     // Operators - Logical
     {tok_exclaimationmark, std::regex("!")},
-    {tok_questionmark, std::regex("\\?")},
+    // {tok_questionmark, std::regex("\\?")},
 
     // Delimiters - Parentheses and brackets
     {tok_lparen, std::regex("\\(")},
@@ -177,7 +177,7 @@ static std::map<token_e, std::regex> token_regex = {
     {tok_comma, std::regex(",")},
     {tok_semicolon, std::regex(";")},
     {tok_colon, std::regex(":")},
-    {tok_dot, std::regex("\\.")},
+    // {tok_dot, std::regex("\\.")},
 };
 
 /** @brief definition of precidence levels
@@ -201,39 +201,39 @@ static std::map<token_e, std::tuple<int, int>> token_presidence = {
     {tok_comment, std::tuple<int, int>(0, 0)},
 
     // Keywords - Type qualifiers
-    {tok_let, std::tuple<int, int>(0, 0)},
-    {tok_mut, std::tuple<int, int>(0, 0)},
-    {tok_dyn, std::tuple<int, int>(0, 0)},
-    {tok_static, std::tuple<int, int>(0, 0)},
-    {tok_typedef, std::tuple<int, int>(0, 0)},
+    // {tok_let, std::tuple<int, int>(0, 0)},
+    // {tok_mut, std::tuple<int, int>(0, 0)},
+    // {tok_dyn, std::tuple<int, int>(0, 0)},
+    // {tok_static, std::tuple<int, int>(0, 0)},
+    // {tok_typedef, std::tuple<int, int>(0, 0)},
 
     // Keywords - Primitive types
     {tok_bool, std::tuple<int, int>(0, 100)},
     {tok_char, std::tuple<int, int>(0, 100)},
-    {tok_short, std::tuple<int, int>(0, 100)},
+    // {tok_short, std::tuple<int, int>(0, 100)},
     {tok_int, std::tuple<int, int>(0, 100)},
-    {tok_long_long, std::tuple<int, int>(0, 100)},
-    {tok_long, std::tuple<int, int>(0, 100)},
+    // {tok_long_long, std::tuple<int, int>(0, 100)},
+    // {tok_long, std::tuple<int, int>(0, 100)},
     {tok_float, std::tuple<int, int>(0, 100)},
-    {tok_double, std::tuple<int, int>(0, 100)},
+    // {tok_double, std::tuple<int, int>(0, 100)},
     {tok_void, std::tuple<int, int>(0, 100)},
 
     // Keywords - Complex types
-    {tok_enum, std::tuple<int, int>(0, 100)},
-    {tok_struct, std::tuple<int, int>(0, 100)},
-    {tok_union, std::tuple<int, int>(0, 100)},
+    // {tok_enum, std::tuple<int, int>(0, 100)},
+    // {tok_struct, std::tuple<int, int>(0, 100)},
+    // {tok_union, std::tuple<int, int>(0, 100)},
 
     // Keywords - Control flow
     {tok_if, std::tuple<int, int>(0, 100)},
     {tok_else, std::tuple<int, int>(0, 100)},
-    {tok_switch, std::tuple<int, int>(0, 100)},
-    {tok_case, std::tuple<int, int>(0, 100)},
-    {tok_default, std::tuple<int, int>(0, 100)},
-    {tok_for, std::tuple<int, int>(0, 100)},
+    // {tok_switch, std::tuple<int, int>(0, 100)},
+    // {tok_case, std::tuple<int, int>(0, 100)},
+    // {tok_default, std::tuple<int, int>(0, 100)},
+    // {tok_for, std::tuple<int, int>(0, 100)},
     {tok_while, std::tuple<int, int>(0, 100)},
-    {tok_do, std::tuple<int, int>(0, 100)},
-    {tok_break, std::tuple<int, int>(100, 0)},
-    {tok_continue, std::tuple<int, int>(100, 0)},
+    // {tok_do, std::tuple<int, int>(0, 100)},
+    // {tok_break, std::tuple<int, int>(100, 0)},
+    // {tok_continue, std::tuple<int, int>(100, 0)},
     {tok_return, std::tuple<int, int>(100, 100)},
 
     // Identifiers
@@ -255,7 +255,7 @@ static std::map<token_e, std::tuple<int, int>> token_presidence = {
     {tok_minus, std::tuple<int, int>(50, 51)},
     {tok_star, std::tuple<int, int>(55, 56)},
     {tok_slash, std::tuple<int, int>(55, 56)},
-    {tok_percent, std::tuple<int, int>(55, 56)},
+    // {tok_percent, std::tuple<int, int>(55, 56)},
 
     // Operators - Assignment (right-associative)
     {tok_assign, std::tuple<int, int>(20, 19)},
@@ -266,7 +266,8 @@ static std::map<token_e, std::tuple<int, int>> token_presidence = {
 
     // Operators - Logical
     {tok_exclaimationmark, std::tuple<int, int>(0, 60)}, // prefix unary
-    {tok_questionmark, std::tuple<int, int>(15, 14)}, // ternary (right-assoc)
+    // {tok_questionmark, std::tuple<int, int>(15, 14)}, // ternary
+    // (right-assoc)
 
     // Delimiters
     {tok_lparen, std::tuple<int, int>(0, 100)},
@@ -280,8 +281,8 @@ static std::map<token_e, std::tuple<int, int>> token_presidence = {
     {tok_comma, std::tuple<int, int>(10, 11)},
     {tok_semicolon, std::tuple<int, int>(0, 0)},
     {tok_colon, std::tuple<int, int>(5, 6)},
-    {tok_dot,
-     std::tuple<int, int>(80, 81)}, // member access (highest precedence)
+    // {tok_dot,
+    //  std::tuple<int, int>(80, 81)}, // member access (highest precedence)
 };
 
 int get_left_precidence(token_e tok);
@@ -302,6 +303,8 @@ public:
 
 token_t *create_token_t(token_e e_tok_type, std::string t_val, int linenumber);
 
-} // namespace lexer
+std::string debug_tok(token_t *token);
+
+} // namespace compiler
 
 #endif /* end of include guard: TOKENS_H */

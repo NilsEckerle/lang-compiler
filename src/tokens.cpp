@@ -1,7 +1,10 @@
 #include "tokens.h"
+#include "fmt/format.h"
+// #include "spdlog/fmt/fmt.h"
+//
 #include <string>
 
-namespace lexer {
+namespace compiler {
 
 token_t::token_t(token_e e_tok_type, std::string t_val, int linenumber) {
   this->e_tok_type = e_tok_type;
@@ -21,64 +24,64 @@ std::string token_t::type_name() {
     return "number";
   case tok_string:
     return "string";
-  case tok_let:
-    return "let";
-  case tok_mut:
-    return "mut";
-  case tok_dyn:
-    return "dyn";
-  case tok_static:
-    return "static";
-  case tok_typedef:
-    return "typedef";
-  case tok_short:
-    return "short";
+  // case tok_let:
+  //   return "let";
+  // case tok_mut:
+  //   return "mut";
+  // case tok_dyn:
+  //   return "dyn";
+  // case tok_static:
+  //   return "static";
+  // case tok_typedef:
+  //   return "typedef";
+  // case tok_short:
+  //   return "short";
   case tok_int:
     return "int";
-  case tok_long:
-    return "long";
-  case tok_long_long:
-    return "longlong";
+  // case tok_long:
+  //   return "long";
+  // case tok_long_long:
+  //   return "longlong";
   case tok_float:
     return "float";
-  case tok_double:
-    return "double";
+  // case tok_double:
+  //   return "double";
   case tok_char:
     return "char";
   case tok_bool:
     return "bool";
   case tok_void:
     return "void";
-  case tok_enum:
-    return "enum";
-  case tok_struct:
-    return "struct";
-  case tok_union:
-    return "union";
+  // case tok_enum:
+  //   return "enum";
+  // case tok_struct:
+  //   return "struct";
+  // case tok_union:
+  //   return "union";
   case tok_if:
     return "if";
   case tok_else:
     return "else";
-  case tok_switch:
-    return "switch";
-  case tok_case:
-    return "case";
-  case tok_default:
-    return "default";
-  case tok_questionmark:
-    return "questionmark";
+  // case tok_switch:
+  //   return "switch";
+  // case tok_case:
+  //   return "case";
+  // case tok_default:
+  //   return "default";
+  // case tok_questionmark:
+  //   return "questionmark";
   case tok_exclaimationmark:
     return "exclaimationmark";
-  case tok_do:
-    return "do";
+  // case tok_do:
+  //   return "do";
   case tok_while:
     return "while";
-  case tok_for:
-    return "for";
-  case tok_break:
-    return "break";
-  case tok_continue:
-    return "continue";
+  // case tok_for:
+  //   return "for";
+  // case tok_break:
+  //   return "break";
+  // case tok_continue:
+  //   return "continue";
   case tok_return:
     return "return";
   case tok_plus:
@@ -91,8 +94,8 @@ std::string token_t::type_name() {
     return "slash";
   case tok_char_literal:
     return "char_literal";
-  case tok_percent:
-    return "percent";
+  // case tok_percent:
+  //   return "percent";
   case tok_assign:
     return "assign";
   case tok_eq:
@@ -125,8 +128,8 @@ std::string token_t::type_name() {
     return "colon";
   case tok_comma:
     return "comma";
-  case tok_dot:
-    return "dot";
+    // case tok_dot:
+    //   return "dot";
   }
   return "TOKEN NOT YET NAMED!!!";
 }
@@ -145,18 +148,15 @@ int get_right_precidence(token_e tok) {
 
 token_t *create_token_t(token_e e_tok_type, std::string t_val, int linenumber) {
   token_t *tok;
-  switch (e_tok_type) {
-  case tok_id:
-  case tok_number:
-  case tok_string:
-  case tok_comment:
-    tok = new token_t(e_tok_type, t_val, linenumber);
-    break;
-  default:
-    tok = new token_t(e_tok_type, "", linenumber);
-    break;
-  }
+  tok = new token_t(e_tok_type, t_val, linenumber);
   return tok;
 }
 
-} // namespace lexer
+std::string debug_tok(token_t *token) {
+  std::string s;
+  s = fmt::format("<{}, ({})>", token->type_name().c_str(),
+                  token->t_val.c_str());
+  return s;
+}
+
+} // namespace compiler

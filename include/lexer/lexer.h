@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+namespace compiler {
 namespace lexer {
 
 class lexer_t {
@@ -22,8 +23,7 @@ private:
 
 std::vector<token_t *> lex_file(std::string t_input_file_path);
 
-std::string debug_tok(token_t *token);
-
 } // namespace lexer
+} // namespace compiler
 
 #endif /* end of include guard: LEXER_H */

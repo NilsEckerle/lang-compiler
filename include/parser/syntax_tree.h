@@ -4,6 +4,7 @@
 #include "tokens.h"
 #include <string>
 
+namespace compiler {
 namespace parser {
 namespace ast {
 
@@ -14,12 +15,12 @@ public:
 
 class operant {
 private:
-  lexer::token_t *m_tok;
+  token_t *m_tok;
 };
 
 class operation {
 private:
-  lexer::token_t *m_tok;
+  token_t *m_tok;
   int lh_precedence;
   int rh_precedence;
 };
@@ -33,5 +34,6 @@ private:
 
 } // namespace ast
 } // namespace parser
+} // namespace compiler
 
 #endif // !SYNTAX_TREE_H
