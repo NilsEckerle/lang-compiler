@@ -1,0 +1,20 @@
+int get_number() {
+  int i = 0;
+
+  i = 4*3;
+  i = i-2;
+  i = i*5;
+
+  return i;
+}
+
+int main() {
+  //int number = get_number();
+  int number = 2;
+
+  number = number * 1000;
+
+  return number;
+}
+
+

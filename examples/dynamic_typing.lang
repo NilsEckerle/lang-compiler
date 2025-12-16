@@ -1,17 +1,12 @@
-dyn half(dyn number) {
-  let result = number / 2; // type: can be short, int, long, float, double
+int half(int number) {
+  int result = number / 2; // type: can be short, int, long, float, double
 
   return result;
 }
 
-int main (int argc, char *argv[]) {
-  let f = 1.2;
-  let i = 5;
-  let i2 = 4;
-
-  printf(f"{f}/2={half(f)}\n");
-  printf(f"{i}/2={half(i)}\n");
-  printf(f"{i2}/2={half(i2)}\n");
+int main (int argc, char *argv) {
+  int i = 5;
+  int i2 = 4;
 
   return 0;
 } // comment at end of file
