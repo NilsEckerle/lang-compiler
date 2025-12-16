@@ -1,0 +1,2 @@
+llm "what different parsing methodes are there for parsin tokens into a abstract syntax tree in an compiler. currently i only knwo prat parsing. give me pros and cons and what is popular."
+
