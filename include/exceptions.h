@@ -52,6 +52,19 @@ public:
   };
 };
 
+class variable_already_declared_error : public syntax_error {
+public:
+  variable_already_declared_error(std::string msg) : syntax_error(msg) {
+    this->formatted_msg = fmt::format("Varable is not declared: {}", this->msg);
+  };
+  variable_already_declared_error(std::string msg, token_t *p_tok)
+      : syntax_error(msg, p_tok) {
+    this->formatted_msg =
+        fmt::format("Varable is not declared: {}: {}: {}",
+                    this->p_tok->linenumber, this->p_tok->t_val, this->msg);
+  };
+};
+
 } // namespace exceptions
 } // namespace compiler
 #endif // !EXCEPTIONS_H
