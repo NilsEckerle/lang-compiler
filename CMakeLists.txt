@@ -73,6 +73,7 @@ add_executable(tests
     # test/unittest/tokens.cpp
     # test/unittest/lexer.cpp
     # test/moduletest/lexer.cpp
+    test/unittest/symbol_table.cpp
     test/unittest/parser.cpp
     test/unittest/pratt_parser.cpp
 )
