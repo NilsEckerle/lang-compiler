@@ -86,6 +86,7 @@ target_link_libraries(tests
     myproject_lib
     gtest_main
     spdlog
+    fmt
 )
 
 # Discover tests
