@@ -16,16 +16,18 @@ using value_t = std::variant<int, float, char, char *, std::string, bool,
 
 class data_t {
 public:
-  data_t(token_e type, int pointer_level, value_t value, bool is_const,
-         bool is_static, bool is_function) {
+  data_t(token_e type, int pointer_level,
+         parser::ast::node::expression_t *p_expr, bool is_const, bool is_static,
+         bool is_function) {
     this->type = type;
     this->pointer_level = pointer_level;
     this->is_const = is_const;
     this->is_static = is_static;
     this->is_function = is_function;
-    this->value = value;
+    this->p_expr = p_expr;
   }
-  value_t get_value();
+  parser::ast::node::expression_t *get_expr();
+  void set_expr(parser::ast::node::expression_t *);
 
 public:
   token_e type;
@@ -36,7 +38,7 @@ public:
   bool is_function;
 
 private:
-  value_t value;
+  parser::ast::node::expression_t *p_expr;
 };
 
 class symbol_table_t {
@@ -45,6 +47,7 @@ public:
   symbol_table_t(symbol_table_t *p_previous);
   bool is_defined(std::string id);
   void add(parser::ast::node::node_t *p_node);
+  void assign(parser::ast::node::assign_expr_t *p_assign);
   data_t *get(std::string id) { return this->table.find(id)->second; }
 
 public:
