@@ -27,12 +27,12 @@ TEST_F(symbol_table_unit_test, general_syntax_test) {
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(dt_int, table_data->type);
+  ASSERT_EQ(tok_int, table_data->type);
   ASSERT_EQ(0, table_data->pointer_level);
   ASSERT_FALSE(table_data->is_static);
   ASSERT_FALSE(table_data->is_const);
   ASSERT_FALSE(table_data->is_function);
-  ASSERT_EQ(5, table_data->get_value());
+  ASSERT_EQ(5, std::get<int>(table_data->get_value()));
 }
 
 TEST_F(symbol_table_unit_test, variable_int_test) {
@@ -45,12 +45,12 @@ TEST_F(symbol_table_unit_test, variable_int_test) {
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(dt_int, table_data->type);
+  ASSERT_EQ(tok_int, table_data->type);
   ASSERT_EQ(0, table_data->pointer_level);
   ASSERT_FALSE(table_data->is_static);
   ASSERT_FALSE(table_data->is_const);
   ASSERT_FALSE(table_data->is_function);
-  ASSERT_EQ(5, table_data->get_value());
+  ASSERT_EQ(5, std::get<int>(table_data->get_value()));
 }
 
 TEST_F(symbol_table_unit_test, variable_float_test) {
@@ -63,12 +63,12 @@ TEST_F(symbol_table_unit_test, variable_float_test) {
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["another_var_name"]);
-  ASSERT_EQ(dt_float, table_data->type);
+  ASSERT_EQ(tok_float, table_data->type);
   ASSERT_EQ(0, table_data->pointer_level);
   ASSERT_FALSE(table_data->is_static);
   ASSERT_FALSE(table_data->is_const);
   ASSERT_FALSE(table_data->is_function);
-  ASSERT_EQ(2.8f, table_data->get_value());
+  ASSERT_EQ(2.8f, std::get<float>(table_data->get_value()));
 }
 
 TEST_F(symbol_table_unit_test, variable_char_test) {
@@ -81,12 +81,12 @@ TEST_F(symbol_table_unit_test, variable_char_test) {
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(dt_char, table_data->type);
+  ASSERT_EQ(tok_char, table_data->type);
   ASSERT_EQ(0, table_data->pointer_level);
   ASSERT_FALSE(table_data->is_static);
   ASSERT_FALSE(table_data->is_const);
   ASSERT_FALSE(table_data->is_function);
-  ASSERT_EQ('x', table_data->get_value());
+  ASSERT_EQ('x', std::get<char>(table_data->get_value()));
 }
 
 TEST_F(symbol_table_unit_test, variable_string_test) {
@@ -99,12 +99,12 @@ TEST_F(symbol_table_unit_test, variable_string_test) {
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(dt_string, table_data->type);
+  ASSERT_EQ(tok_string, table_data->type);
   ASSERT_EQ(0, table_data->pointer_level);
   ASSERT_FALSE(table_data->is_static);
   ASSERT_FALSE(table_data->is_const);
   ASSERT_FALSE(table_data->is_function);
-  ASSERT_EQ("Hallo Welt!", table_data->get_value());
+  ASSERT_EQ("Hallo Welt!", std::get<std::string>(table_data->get_value()));
 }
 
 TEST_F(symbol_table_unit_test, variable_pointer_test) {
@@ -117,92 +117,92 @@ TEST_F(symbol_table_unit_test, variable_pointer_test) {
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(dt_char, table_data->type);
+  ASSERT_EQ(tok_char, table_data->type);
   ASSERT_EQ(1, table_data->pointer_level);
   ASSERT_FALSE(table_data->is_static);
   ASSERT_FALSE(table_data->is_const);
   ASSERT_FALSE(table_data->is_function);
-  ASSERT_EQ("hallo", table_data->get_value());
+  ASSERT_EQ("hallo", std::get<char *>(table_data->get_value()));
 }
 
 TEST_F(symbol_table_unit_test, variable_const_test) {
   parser::ast::node::variable_t *p_var = new parser::ast::node::variable_t(
-      tok_int, 0, "var_name", new parser::ast::node::literal_expr_t(tok_int, 1),
-      true, false);
+      tok_int, 0, "var_name",
+      new parser::ast::node::literal_expr_t(tok_int, 1));
 
   p_st->add(p_var);
 
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(dt_char, table_data->type);
+  ASSERT_EQ(tok_char, table_data->type);
   ASSERT_EQ(1, table_data->pointer_level);
   ASSERT_FALSE(table_data->is_static);
   ASSERT_TRUE(table_data->is_const);
   ASSERT_FALSE(table_data->is_function);
-  ASSERT_EQ(1, table_data->get_value());
+  ASSERT_EQ(1, std::get<int>(table_data->get_value()));
   ASSERT_FALSE(table_data->is_function);
 }
 
 TEST_F(symbol_table_unit_test, variable_static_test) {
   parser::ast::node::variable_t *p_var = new parser::ast::node::variable_t(
-      tok_int, 0, "var_name", new parser::ast::node::literal_expr_t(tok_int, 1),
-      false, true);
+      tok_int, 0, "var_name",
+      new parser::ast::node::literal_expr_t(tok_int, 1));
 
   p_st->add(p_var);
 
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(dt_char, table_data->type);
+  ASSERT_EQ(tok_char, table_data->type);
   ASSERT_EQ(1, table_data->pointer_level);
   ASSERT_TRUE(table_data->is_static);
   ASSERT_FALSE(table_data->is_const);
   ASSERT_FALSE(table_data->is_function);
-  ASSERT_EQ(1, table_data->get_value());
+  ASSERT_EQ(1, std::get<int>(table_data->get_value()));
 }
 
 TEST_F(symbol_table_unit_test, variable_const_static_test) {
   parser::ast::node::variable_t *p_var = new parser::ast::node::variable_t(
-      tok_int, 0, "var_name", new parser::ast::node::literal_expr_t(tok_int, 1),
-      true, true);
+      tok_int, 0, "var_name",
+      new parser::ast::node::literal_expr_t(tok_int, 1));
 
   p_st->add(p_var);
 
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(dt_char, table_data->type);
+  ASSERT_EQ(tok_char, table_data->type);
   ASSERT_EQ(1, table_data->pointer_level);
   ASSERT_TRUE(table_data->is_static);
   ASSERT_TRUE(table_data->is_const);
   ASSERT_FALSE(table_data->is_function);
-  ASSERT_EQ(1, table_data->get_value());
+  ASSERT_EQ(1, std::get<int>(table_data->get_value()));
 }
 
 TEST_F(symbol_table_unit_test, variable_double_declare_test) {
   parser::ast::node::variable_t *p_var = new parser::ast::node::variable_t(
-      tok_int, 0, "var_name", new parser::ast::node::literal_expr_t(tok_int, 1),
-      false, false);
+      tok_int, 0, "var_name",
+      new parser::ast::node::literal_expr_t(tok_int, 1));
 
   parser::ast::node::variable_t *p_var2 = new parser::ast::node::variable_t(
       tok_string, 0, "var_name",
-      new parser::ast::node::literal_expr_t(tok_string, "Moin"), false, false);
+      new parser::ast::node::literal_expr_t(tok_string, "Moin"));
 
   p_st->add(p_var);
-  ASSERT_THROW(ps_st->add(p_var2, exceptions::variable_already_declared_error))
+  ASSERT_THROW(p_st->add(p_var2), exceptions::variable_already_declared_error);
 }
 
 TEST_F(symbol_table_unit_test, variable_assign_test) {
   parser::ast::node::variable_t *p_var = new parser::ast::node::variable_t(
-      tok_int, 0, "var_name", new parser::ast::node::literal_expr_t(tok_int, 1),
-      false, false);
+      tok_int, 0, "var_name",
+      new parser::ast::node::literal_expr_t(tok_int, 1));
 
   p_st->add(p_var);
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(1, table_data->get_value());
+  ASSERT_EQ(1, std::get<int>(table_data->get_value()));
 
   parser::ast::node::assign_expr_t *p_assign =
       new parser::ast::node::assign_expr_t(
@@ -211,14 +211,15 @@ TEST_F(symbol_table_unit_test, variable_assign_test) {
   p_st->assign(p_assign);
   ASSERT_EQ(1, p_st->table.size());
   ASSERT_NO_THROW(table_data = p_st->table["var_name"]);
-  ASSERT_EQ(2, table_data->get_value());
+  ASSERT_EQ(2, std::get<int>(table_data->get_value()));
 }
 
 TEST_F(symbol_table_unit_test, function_test) {
   parser::ast::node::function_t *p_func = new parser::ast::node::function_t(
       tok_int, 0, "main",
-      new std::vector<token_e, int>({std::tuple<token_e, int>(tok_int, 0),
-                                     std::tuple<token_e, int>(tok_int, 0)}),
+      new std::vector<std::tuple<token_e, int>>(
+          {std::tuple<token_e, int>(tok_int, 0),
+           std::tuple<token_e, int>(tok_int, 0)}),
       new parser::ast::node::block_t());
 
   p_st->add(p_func);
@@ -226,10 +227,10 @@ TEST_F(symbol_table_unit_test, function_test) {
   ASSERT_EQ(1, p_st->table.size());
   symbol_table::data_t *table_data;
   ASSERT_NO_THROW(table_data = p_st->table["main"]);
-  ASSERT_EQ(dt_int, table_data->type);
+  ASSERT_EQ(tok_int, table_data->type);
   ASSERT_EQ(0, table_data->pointer_level);
   ASSERT_FALSE(table_data->is_static);
   ASSERT_FALSE(table_data->is_const);
   ASSERT_TRUE(table_data->is_function);
-  ASSERT_EQ(NULL, table_data->get_value());
+  ASSERT_EQ(nullptr, std::get<void *>(table_data->get_value()));
 }
