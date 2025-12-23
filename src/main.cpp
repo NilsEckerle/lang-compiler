@@ -3,6 +3,7 @@
 #include "parser/abstract_syntax_tree.h"
 #include "parser/parser.h"
 #include "parser/syntax_tree.h"
+#include "spdlog/fmt/bundled/base.h"
 #include "spdlog/spdlog.h"
 #include "tokens.h"
 #include <cstdlib>
@@ -62,10 +63,12 @@ void run_compiler(std::vector<std::string> source_files) {
   // start compiling
   for (std::string source_path : source_files) {
     // tokenize
+    fmt::println("========== LEXER ==========");
     std::vector<token_t *> tokens = lexer::lex_file(source_path);
     // spdlog::info("Lexing finished");
     debug_print_tokens(tokens);
     // parse
+    fmt::println("========== PARSER ==========");
     std::vector<parser::ast::abstract_syntax_tree_t *> *trees =
         parser::parse_tokens(tokens);
 
