@@ -4,6 +4,7 @@
 #include "tokens.h"
 #include <string>
 #include <tuple>
+#include <variant>
 #include <vector>
 
 namespace compiler {
@@ -36,6 +37,18 @@ public:
   virtual ~expression_t() = default;
   virtual std::string to_prefix_notation() const = 0;
   virtual std::string debug_print() const = 0;
+  virtual bool operator==(const expression_t &other) const {
+    return debug_print() == other.debug_print();
+  }
+  virtual bool operator==(const std::string &other) const {
+    return debug_print() == other;
+  }
+  virtual bool operator!=(const expression_t &other) const {
+    return !(*this == other);
+  }
+  virtual bool operator!=(const std::string &other) const {
+    return !(*this == other);
+  }
 };
 
 class if_t : public statement_t {
@@ -91,7 +104,7 @@ public:
 class function_t : public node_t {
 public:
   function_t(
-      token_e type, int pointer_level, std::string identifyer,
+      token_e type, int pointer_level, std::string identifier,
       std::vector<std::tuple<token_e, int>> *parameter_type_pointer_level_tuple,
       block_t *block);
   ~function_t();
@@ -102,7 +115,7 @@ public:
   int pointer_level;
   std::vector<std::tuple<token_e, int>> *parameter_type_pointer_level_tuple;
   block_t *block;
-  std::string identifyer;
+  std::string identifier;
 };
 
 class variable_t : public statement_t {
@@ -150,17 +163,19 @@ public:
   expression_t *operand;
 };
 
+using literal_t = std::variant<int, float, double, char, char *, std::string>;
+
 // Literal expression node (numbers, strings, identifiers)
 class literal_expr_t : public expression_t {
 public:
-  literal_expr_t(token_e type, std::string value) : type(type), value(value) {}
+  literal_expr_t(token_e type, literal_t value) : type(type), value(value) {}
   ~literal_expr_t() = default;
   virtual std::string to_prefix_notation() const;
   virtual std::string debug_print() const;
 
 public:
   token_e type;
-  std::string value;
+  literal_t value;
 };
 
 // Function call expression node (e.g., foo(a, b, c))

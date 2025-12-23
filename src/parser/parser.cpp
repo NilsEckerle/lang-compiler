@@ -292,7 +292,7 @@ ast::node::node_t *parse_program(std::vector<token_t *> &tokens) {
   case tok_void:
   case tok_char:
     if (peek(tokens, 2)->e_tok_type != tok_id) {
-      throw exceptions::parser_error("missing identifyer after", tok);
+      throw exceptions::parser_error("missing identifier after", tok);
     }
     if (peek(tokens, 3)->e_tok_type == tok_lparen) {
       p_node = parse_function(tokens);
