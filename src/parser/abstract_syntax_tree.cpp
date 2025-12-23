@@ -3,6 +3,25 @@
 #include <fmt/format.h>
 #include <string>
 
+// Helper function to convert variant to string
+std::string variant_to_string(
+    const std::variant<int, float, double, char, char *, std::string> &v) {
+  return std::visit(
+      [](auto &&arg) -> std::string {
+        using T = std::decay_t<decltype(arg)>;
+        if constexpr (std::is_same_v<T, std::string>) {
+          return arg;
+        } else if constexpr (std::is_same_v<T, char *>) {
+          return std::string(arg);
+        } else if constexpr (std::is_same_v<T, char>) {
+          return std::string(1, arg);
+        } else {
+          return std::to_string(arg);
+        }
+      },
+      v);
+}
+
 namespace compiler::parser::ast {
 
 std::string abstract_syntax_tree_t::debug_print() {
@@ -63,12 +82,12 @@ std::string return_t::debug_print() const {
 }
 
 function_t::function_t(
-    token_e type, int pointer_level, std::string identifyer,
+    token_e type, int pointer_level, std::string identifier,
     std::vector<std::tuple<token_e, int>> *parameter_type_pointer_level_tuple,
     block_t *block) {
   this->type = type;
   this->pointer_level = pointer_level;
-  this->identifyer = identifyer;
+  this->identifier = identifier;
   this->parameter_type_pointer_level_tuple = parameter_type_pointer_level_tuple;
   this->block = block;
 }
@@ -79,7 +98,7 @@ function_t::~function_t() {
 std::string function_t::debug_print() const {
   return fmt::format("function({}, {}, {}, {})",
                      create_token_t(this->type, "", -1)->type_name(),
-                     this->pointer_level, this->identifyer,
+                     this->pointer_level, this->identifier,
                      this->block->debug_print());
 }
 
@@ -128,7 +147,7 @@ std::string literal_expr_t::to_prefix_notation() const {
   std::string s;
 
   s = fmt::format("({} {})", create_token_t(this->type, "", -1)->type_name(),
-                  this->value);
+                  variant_to_string(this->value));
 
   return s;
 }
