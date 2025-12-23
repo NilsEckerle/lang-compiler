@@ -103,11 +103,13 @@ std::string function_t::debug_print() const {
 }
 
 variable_t::variable_t(token_e type, int pointer_level, std::string id,
-                       expression_t *expr) {
+             expression_t *p_expr, bool is_const, bool is_static) {
   this->type = type;
   this->pointer_level = pointer_level;
   this->identifier = id;
-  this->p_expr = expr;
+  this->p_expr = p_expr;
+  this->is_static = is_static;
+  this->is_const = is_const;
 }
 variable_t::~variable_t() { free(this->p_expr); }
 std::string variable_t::debug_print() const {
@@ -115,6 +117,19 @@ std::string variable_t::debug_print() const {
                      create_token_t(this->type, "", -1)->type_name(),
                      this->pointer_level, this->identifier,
                      this->p_expr->debug_print());
+}
+
+std::string assign_expr_t::to_prefix_notation() const {
+  std::string s;
+
+  s = fmt::format("({} {} {})",
+                  compiler::create_token_t(tok_assign, "", -1)->type_name(),
+                  this->identifier, this->right->to_prefix_notation());
+
+  return s;
+}
+std::string assign_expr_t::debug_print() const {
+  return fmt::format("assign_expr({})", this->to_prefix_notation());
 }
 
 std::string binary_expr_t::to_prefix_notation() const {

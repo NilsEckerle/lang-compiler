@@ -121,7 +121,7 @@ public:
 class variable_t : public statement_t {
 public:
   variable_t(token_e type, int pointer_level, std::string identifier,
-             expression_t *p_expr);
+             expression_t *p_expr, bool is_const = false, bool is_static = false);
   ~variable_t();
   virtual std::string debug_print() const;
 
@@ -130,6 +130,22 @@ public:
   int pointer_level;
   std::string identifier;
   expression_t *p_expr;
+  bool is_const;
+  bool is_static;
+};
+
+// assign expression node (e.g., a = b, x = 2 * 5 - y)
+class assign_expr_t : public expression_t {
+public:
+  assign_expr_t(std::string identifier, expression_t *right)
+      : identifier(identifier), right(right) {}
+  ~assign_expr_t() { delete right; }
+  virtual std::string to_prefix_notation() const;
+  virtual std::string debug_print() const;
+
+public:
+  std::string identifier;
+  expression_t *right;
 };
 
 // Binary expression node (e.g., a + b, x * y, a < b)
