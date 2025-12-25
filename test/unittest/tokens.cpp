@@ -11,9 +11,9 @@ protected:
 };
 
 TEST_F(tokens_unit_test, debug_token_test) {
-  token_t tok = token_t(tok_dyn, "dyn", 1);
+  token_t tok = token_t(tok_int, "int", 1);
   std::string result = debug_tok(&tok);
-  std::string expected = "<dyn, (dyn)>";
+  std::string expected = "<int, (int)>";
   EXPECT_EQ(expected, result);
 
   tok = token_t(tok_number, "123", 1);
