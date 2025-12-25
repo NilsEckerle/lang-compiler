@@ -46,7 +46,37 @@ token_e match_type(std::vector<token_t *> &tokens) {
   case tok_bool:
     type = tok->e_tok_type;
     break;
-  default:
+  case tok_eof:
+  case tok_comment:
+  case tok_if:
+  case tok_else:
+  case tok_while:
+  case tok_return:
+  case tok_plus:
+  case tok_minus:
+  case tok_star:
+  case tok_slash:
+  case tok_assign:
+  case tok_lt:
+  case tok_leq:
+  case tok_gt:
+  case tok_geq:
+  case tok_eq:
+  case tok_neq:
+  case tok_exclaimationmark:
+  case tok_lparen:
+  case tok_rparen:
+  case tok_lbrace:
+  case tok_rbrace:
+  case tok_lbracket:
+  case tok_rbracket:
+  case tok_comma:
+  case tok_semicolon:
+  case tok_colon:
+  case tok_id:
+  case tok_number:
+  case tok_string:
+  case tok_char_literal:
     throw exceptions::parser_error("not an valid type", peek(tokens));
   }
 
@@ -175,7 +205,32 @@ ast::node::statement_t *parse_statement(std::vector<token_t *> &tokens) {
     tokens.push_back(tok);
     p_stmt = parse_assign(tokens);
     break;
-  default:
+  case tok_eof:
+  case tok_comment:
+  case tok_plus:
+  case tok_minus:
+  case tok_star:
+  case tok_slash:
+  case tok_assign:
+  case tok_lt:
+  case tok_leq:
+  case tok_gt:
+  case tok_geq:
+  case tok_eq:
+  case tok_neq:
+  case tok_exclaimationmark:
+  case tok_lparen:
+  case tok_rparen:
+  case tok_lbrace:
+  case tok_rbrace:
+  case tok_lbracket:
+  case tok_rbracket:
+  case tok_comma:
+  case tok_semicolon:
+  case tok_colon:
+  case tok_number:
+  case tok_string:
+  case tok_char_literal:
     throw compiler::exceptions::syntax_error("No statement found", tok);
   }
 
@@ -301,7 +356,37 @@ ast::node::node_t *parse_program(std::vector<token_t *> &tokens) {
       p_node = parse_define(tokens);
     }
     break;
-  default:
+  case tok_eof:
+  case tok_comment:
+  case tok_if:
+  case tok_else:
+  case tok_while:
+  case tok_return:
+  case tok_plus:
+  case tok_minus:
+  case tok_star:
+  case tok_slash:
+  case tok_assign:
+  case tok_lt:
+  case tok_leq:
+  case tok_gt:
+  case tok_geq:
+  case tok_eq:
+  case tok_neq:
+  case tok_exclaimationmark:
+  case tok_lparen:
+  case tok_rparen:
+  case tok_lbrace:
+  case tok_rbrace:
+  case tok_lbracket:
+  case tok_rbracket:
+  case tok_comma:
+  case tok_semicolon:
+  case tok_colon:
+  case tok_id:
+  case tok_number:
+  case tok_string:
+  case tok_char_literal:
     throw compiler::exceptions::syntax_error("No statement found", tok);
   }
 

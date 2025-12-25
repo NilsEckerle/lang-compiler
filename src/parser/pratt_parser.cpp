@@ -44,10 +44,33 @@ int get_precedence(token_e tok) {
     return 4;
   case tok_rparen: // )
     return 0;
-
-  default:
-    return -1; // Not an operator
+  case tok_eof:
+  case tok_comment:
+  case tok_bool:
+  case tok_char:
+  case tok_int:
+  case tok_float:
+  case tok_void:
+  case tok_if:
+  case tok_else:
+  case tok_while:
+  case tok_return:
+  case tok_assign:
+  case tok_exclaimationmark:
+  case tok_lbrace:
+  case tok_rbrace:
+  case tok_lbracket:
+  case tok_rbracket:
+  case tok_comma:
+  case tok_semicolon:
+  case tok_colon:
+  case tok_id:
+  case tok_number:
+  case tok_string:
+  case tok_char_literal:
+    break;
   }
+  return -1; // Not an operator
 }
 
 bool is_expression_delimiter(token_e tok) {
@@ -109,7 +132,37 @@ int next_op_pressidence(const std::vector<token_t *> &tokens) {
     case tok_lparen:
       // case tok_percent:
       return get_precedence(tok->e_tok_type);
-    default:
+    case tok_eof:
+    case tok_comment:
+    case tok_bool:
+    case tok_char:
+    case tok_int:
+    case tok_float:
+    case tok_void:
+    case tok_if:
+    case tok_else:
+    case tok_while:
+    case tok_return:
+    case tok_assign:
+    case tok_lt:
+    case tok_leq:
+    case tok_gt:
+    case tok_geq:
+    case tok_eq:
+    case tok_neq:
+    case tok_exclaimationmark:
+    case tok_rparen:
+    case tok_lbrace:
+    case tok_rbrace:
+    case tok_lbracket:
+    case tok_rbracket:
+    case tok_comma:
+    case tok_semicolon:
+    case tok_colon:
+    case tok_id:
+    case tok_number:
+    case tok_string:
+    case tok_char_literal:
       break;
     }
   }
@@ -227,10 +280,41 @@ parse_primary(std::vector<token_t *> &tokens, ParseContext context,
     // Just an identifier
     return create_literal_expression(id_tok, context);
   }
-
-  default:
-    throw exceptions::parser_error("Expected primary expression", tok);
+  case tok_eof:
+  case tok_comment:
+  case tok_bool:
+  case tok_char:
+  case tok_int:
+  case tok_float:
+  case tok_void:
+  case tok_if:
+  case tok_else:
+  case tok_while:
+  case tok_return:
+  case tok_plus:
+  case tok_minus:
+  case tok_star:
+  case tok_slash:
+  case tok_assign:
+  case tok_lt:
+  case tok_leq:
+  case tok_gt:
+  case tok_geq:
+  case tok_eq:
+  case tok_neq:
+  case tok_exclaimationmark:
+  case tok_lparen:
+  case tok_rparen:
+  case tok_lbrace:
+  case tok_rbrace:
+  case tok_lbracket:
+  case tok_rbracket:
+  case tok_comma:
+  case tok_semicolon:
+  case tok_colon:
+    break;
   }
+  throw exceptions::parser_error("Expected primary expression", tok);
 }
 
 /**
