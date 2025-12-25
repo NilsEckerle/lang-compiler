@@ -28,6 +28,8 @@ bool starts_with_whitespace(std::string str, int *current_linenumber) {
     return true;
   case '\t':
     return true;
+  default:
+    break;
   }
 
   return false;
