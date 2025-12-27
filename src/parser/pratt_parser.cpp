@@ -21,29 +21,43 @@ namespace pratt_parser {
 
 int get_precedence(token_e tok) {
   switch (tok) {
-  case tok_star:  // *
-  case tok_slash: // /
-                  // case tok_percent: // %
-    return 3;
 
-  case tok_plus:  // +
-  case tok_minus: // -
-    return 2;
+  case tok_assign:
+    return 0;
+
+    // case OR (||):
+    // return 1;
+
+    // case AND (&&):
+    // return 2;
+
+  case tok_eq:  // ==
+  case tok_neq: // !=
+    return 3;
 
   case tok_lt:  //
   case tok_leq: // <=
   case tok_gt:  // >
   case tok_geq: // >=
-    return 1;
+    return 4;
 
-  case tok_eq:  // ==
-  case tok_neq: // !=
-    return 0;
+  case tok_plus:  // +
+  case tok_minus: // -
+    return 5;
+
+  case tok_star:  // *
+  case tok_slash: // /
+                  // case tok_percent: // %
+    return 6;
+
+  case tok_exclaimationmark: // *
+    return 7;
 
   case tok_lparen: // (
-    return 4;
+    return 10;
   case tok_rparen: // )
     return 0;
+
   case tok_eof:
   case tok_comment:
   case tok_bool:
@@ -55,8 +69,6 @@ int get_precedence(token_e tok) {
   case tok_else:
   case tok_while:
   case tok_return:
-  case tok_assign:
-  case tok_exclaimationmark:
   case tok_lbrace:
   case tok_rbrace:
   case tok_lbracket:
