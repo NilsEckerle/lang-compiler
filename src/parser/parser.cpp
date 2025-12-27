@@ -37,15 +37,15 @@ token_e match_type(std::vector<token_t *> &tokens) {
   // DEBUG(debug_tok(peek(tokens)));
 
   token_t *tok = peek(tokens);
+  type = tok->e_tok_type;
 
-  switch (tok->e_tok_type) {
+  switch (type) {
   case tok_int:
   case tok_char:
   case tok_void:
   case tok_float:
   case tok_bool:
-    type = tok->e_tok_type;
-    break;
+    break; // type accepted
   case tok_eof:
   case tok_comment:
   case tok_if:
@@ -81,7 +81,6 @@ token_e match_type(std::vector<token_t *> &tokens) {
   }
 
   tokens.pop_back();
-
   return type;
 }
 
