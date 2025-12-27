@@ -16,6 +16,37 @@ endif()
 # Include directories
 include_directories(include)
 
+##################################################
+# LLVM SETUP
+##################################################
+
+# Find LLVM package
+find_package(LLVM REQUIRED CONFIG)
+
+message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
+message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
+
+# Add LLVM definitions and include directories
+include_directories(${LLVM_INCLUDE_DIRS})
+separate_arguments(LLVM_DEFINITIONS_LIST NATIVE_COMMAND ${LLVM_DEFINITIONS})
+add_definitions(${LLVM_DEFINITIONS_LIST})
+
+# Map LLVM components to libraries
+llvm_map_components_to_libnames(llvm_libs 
+  core 
+  support 
+  irreader
+  target
+  x86codegen
+  x86asmparser
+  x86desc
+  x86info
+)
+
+##################################################
+# THIRD PARTY LIBRARY
+##################################################
+
 # Fetch third-party libraries
 include(FetchContent)
 
@@ -53,6 +84,8 @@ add_library(myproject_lib
   src/parser/syntax_tree.cpp
   src/parser/abstract_syntax_tree.cpp
   src/symbol_table.cpp
+  src/code_generation/label_manager.cpp
+  src/code_generation/llvm_ir_generator.cpp
 )
 target_link_libraries(myproject_lib PUBLIC spdlog)
 
@@ -65,6 +98,10 @@ add_executable(main
 target_link_libraries(main PRIVATE myproject_lib argparse fmt)
 # target_link_libraries(main PRIVATE myproject_lib fmt)
 
+##################################################
+# TESTING
+##################################################
+
 # # Enable testing
 enable_testing()
 
@@ -75,6 +112,7 @@ add_executable(tests
   test/unittest/symbol_table.cpp
   test/unittest/parser.cpp
   test/unittest/pratt_parser.cpp
+  test/unittest/label_manager.cpp
 
   test/moduletest/lexer.cpp
 )
