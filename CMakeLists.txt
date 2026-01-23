@@ -78,6 +78,7 @@ FetchContent_MakeAvailable(googletest)
 # Create a library with your core source files
 add_library(myproject_lib
   src/tokens.cpp
+  src/ast/print_test_visitor.cpp
   src/lexer/lexer.cpp
   src/parser/parser.cpp
   src/parser/pratt_parser.cpp
