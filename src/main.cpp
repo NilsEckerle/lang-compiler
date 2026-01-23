@@ -1,8 +1,8 @@
 #include "argparse/argparse.hpp"
+#include "ast/print_test_visitor.h"
 #include "lexer/lexer.h"
 #include "parser/abstract_syntax_tree.h"
 #include "parser/parser.h"
-#include "parser/syntax_tree.h"
 #include "spdlog/fmt/bundled/base.h"
 #include "spdlog/spdlog.h"
 #include "tokens.h"
@@ -75,8 +75,12 @@ void run_compiler(std::vector<std::string> source_files) {
     for (parser::ast::abstract_syntax_tree_t *tree : *trees) {
       debug_print_ast(tree);
     }
-    // spdlog::info("Parsing finished");
-    // debug_print_ast(tree);
+
+    fmt::println("========== LLVMIR CODE GENERATION ==========");
+    for (parser::ast::abstract_syntax_tree_t *tree : *trees) {
+      ast::print_test_visitor_t visitor = ast::print_test_visitor_t();
+      tree->p_head->accept_visitor(&visitor);
+    }
     // Code generation finished
 
     // spdlog::info("Code generation finished");
