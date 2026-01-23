@@ -1,6 +1,7 @@
 #ifndef ABSTRACT_SYNTAX_TREE_H
 #define ABSTRACT_SYNTAX_TREE_H
 
+#include "ast/ast_visitor_interface.h"
 #include "tokens.h"
 #include <string>
 #include <tuple>
@@ -12,6 +13,8 @@ namespace parser {
 namespace ast {
 namespace node {
 
+using namespace compiler::ast;
+
 class node_t {
 protected:
   node_t() = default;
@@ -19,6 +22,7 @@ protected:
 public:
   virtual ~node_t() = default;
   virtual std::string debug_print() const = 0;
+  virtual void accept_visitor(visitor_t *visitor) = 0;
 };
 
 class statement_t : public node_t {
@@ -28,6 +32,7 @@ protected:
 public:
   virtual ~statement_t() = default;
   virtual std::string debug_print() const = 0;
+  virtual void accept_visitor(visitor_t *visitor) = 0;
 };
 
 class expression_t : public node_t {
@@ -37,6 +42,7 @@ public:
   virtual ~expression_t() = default;
   virtual std::string to_prefix_notation() const = 0;
   virtual std::string debug_print() const = 0;
+  virtual void accept_visitor(visitor_t *visitor) = 0;
   virtual bool operator==(const expression_t &other) const {
     return debug_print() == other.debug_print();
   }
@@ -58,6 +64,7 @@ public:
   expression_t *p_expr;
   statement_t *p_stmt;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) { visitor->visit_if(this); }
 };
 
 class else_t : public statement_t {
@@ -66,6 +73,7 @@ public:
   ~else_t();
   statement_t *p_stmt;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) { visitor->visit_else(this); }
 };
 
 class while_t : public statement_t {
@@ -75,6 +83,9 @@ public:
   expression_t *p_expr;
   statement_t *p_stmt;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_while(this);
+  }
 };
 
 class do_t : public statement_t {
@@ -84,6 +95,7 @@ public:
   expression_t *p_expr;
   statement_t *p_stmt;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) { visitor->visit_do(this); }
 };
 
 class return_t : public statement_t {
@@ -92,6 +104,9 @@ public:
   ~return_t();
   expression_t *p_expr;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_return(this);
+  }
 };
 
 class block_t : public statement_t {
@@ -99,6 +114,9 @@ public:
   block_t() = default;
   std::vector<statement_t *> statements;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_block(this);
+  }
 };
 
 class function_t : public node_t {
@@ -109,6 +127,9 @@ public:
       block_t *block);
   ~function_t();
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_function(this);
+  }
 
 public:
   token_e type;
@@ -121,9 +142,13 @@ public:
 class variable_t : public statement_t {
 public:
   variable_t(token_e type, int pointer_level, std::string identifier,
-             expression_t *p_expr, bool is_const = false, bool is_static = false);
+             expression_t *p_expr, bool is_const = false,
+             bool is_static = false);
   ~variable_t();
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_variable(this);
+  }
 
 public:
   token_e type;
@@ -142,6 +167,9 @@ public:
   ~assign_expr_t() { delete right; }
   virtual std::string to_prefix_notation() const;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_assign_expr(this);
+  }
 
 public:
   std::string identifier;
@@ -159,6 +187,9 @@ public:
   }
   virtual std::string to_prefix_notation() const;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_binary_expr(this);
+  }
 
 public:
   expression_t *left;
@@ -173,6 +204,9 @@ public:
   ~unary_expr_t() { delete operand; }
   virtual std::string to_prefix_notation() const;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_unary_expr(this);
+  }
 
 public:
   token_e op;
@@ -188,6 +222,9 @@ public:
   ~literal_expr_t() = default;
   virtual std::string to_prefix_notation() const;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_literal_expr(this);
+  }
 
 public:
   token_e type;
@@ -207,6 +244,9 @@ public:
   }
   virtual std::string to_prefix_notation() const;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_call_expr(this);
+  }
 
 public:
   std::string function_name;
@@ -225,6 +265,9 @@ public:
   }
   virtual std::string to_prefix_notation() const;
   virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) {
+    visitor->visit_subscript_expr(this);
+  }
 
 public:
   expression_t *array;

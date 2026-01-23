@@ -1,4 +1,5 @@
 #include "parser/abstract_syntax_tree.h"
+#include "ast/ast_visitor_interface.h"
 #include "tokens.h"
 #include <fmt/format.h>
 #include <string>
@@ -103,7 +104,7 @@ std::string function_t::debug_print() const {
 }
 
 variable_t::variable_t(token_e type, int pointer_level, std::string id,
-             expression_t *p_expr, bool is_const, bool is_static) {
+                       expression_t *p_expr, bool is_const, bool is_static) {
   this->type = type;
   this->pointer_level = pointer_level;
   this->identifier = id;
