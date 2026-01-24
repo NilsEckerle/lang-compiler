@@ -1,7 +1,7 @@
 #ifndef ABSTRACT_SYNTAX_TREE_H
 #define ABSTRACT_SYNTAX_TREE_H
 
-#include "ast/ast_visitor_interface.h"
+#include "code_generation/ast_visitor_interface.h"
 #include "tokens.h"
 #include <string>
 #include <tuple>

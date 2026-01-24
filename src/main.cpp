@@ -1,5 +1,5 @@
 #include "argparse/argparse.hpp"
-#include "ast/print_test_visitor.h"
+#include "code_generation/print_test_visitor.h"
 #include "lexer/lexer.h"
 #include "parser/abstract_syntax_tree.h"
 #include "parser/parser.h"

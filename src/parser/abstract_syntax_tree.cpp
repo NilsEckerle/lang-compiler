@@ -1,5 +1,5 @@
 #include "parser/abstract_syntax_tree.h"
-#include "ast/ast_visitor_interface.h"
+#include "code_generation/ast_visitor_interface.h"
 #include "tokens.h"
 #include <fmt/format.h>
 #include <string>
