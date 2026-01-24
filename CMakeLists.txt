@@ -78,15 +78,14 @@ FetchContent_MakeAvailable(googletest)
 # Create a library with your core source files
 add_library(myproject_lib
   src/tokens.cpp
-  src/ast/print_test_visitor.cpp
   src/lexer/lexer.cpp
   src/parser/parser.cpp
   src/parser/pratt_parser.cpp
   src/parser/syntax_tree.cpp
   src/parser/abstract_syntax_tree.cpp
   src/symbol_table.cpp
-  src/code_generation/label_manager.cpp
-  src/code_generation/llvm_ir_generator.cpp
+  src/code_generation/print_test_visitor.cpp
+  src/code_generation/codegen_visitor.cpp
 )
 target_link_libraries(myproject_lib PUBLIC spdlog)
 
@@ -113,7 +112,6 @@ add_executable(tests
   test/unittest/symbol_table.cpp
   test/unittest/parser.cpp
   test/unittest/pratt_parser.cpp
-  test/unittest/label_manager.cpp
 
   test/moduletest/lexer.cpp
 )
