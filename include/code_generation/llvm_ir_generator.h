@@ -1,4 +1,0 @@
-#ifndef LLVM_IR_GENERATOR_H
-#define LLVM_IR_GENERATOR_H
-
-#endif // !LLVM_IR_GENERATOR_H
