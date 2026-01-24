@@ -1,4 +1,4 @@
-#include "ast/ast_visitor_interface.h"
+#include "code_generation/ast_visitor_interface.h"
 #include "parser/abstract_syntax_tree.h"
 #include "tokens.h"
 #include <cstdio>
