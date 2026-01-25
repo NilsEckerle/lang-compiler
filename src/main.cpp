@@ -1,4 +1,5 @@
 #include "argparse/argparse.hpp"
+#include "code_generation/codegen_visitor.h"
 #include "code_generation/print_test_visitor.h"
 #include "lexer/lexer.h"
 #include "parser/abstract_syntax_tree.h"
@@ -59,28 +60,54 @@ void debug_print_ast(parser::ast::abstract_syntax_tree_t *program_tree) {
   std::cout << program_tree->debug_print() << std::endl;
 }
 
+void print_source(std::string t_source_path) {
+  FILE *tp_file = fopen(t_source_path.c_str(), "rb");
+  if (tp_file == NULL) {
+    throw std::runtime_error("Failed to open file: " + t_source_path);
+  }
+
+  // get file size
+  fseek(tp_file, 0, SEEK_END);
+  long file_size = ftell(tp_file);
+  fseek(tp_file, 0, SEEK_SET);
+
+  // allocate buffer and read file
+  std::string source;
+  source.resize(file_size);
+  fread(&source[0], 1, file_size, tp_file);
+  fclose(tp_file);
+
+  fmt::println("{}", source);
+}
+
 void run_compiler(std::vector<std::string> source_files) {
   // start compiling
   for (std::string source_path : source_files) {
+    fmt::println("========== SOURCE ==========");
+    print_source(source_path);
+
     // tokenize
     fmt::println("========== LEXER ==========");
     std::vector<token_t *> tokens = lexer::lex_file(source_path);
     // spdlog::info("Lexing finished");
     debug_print_tokens(tokens);
+
     // parse
     fmt::println("========== PARSER ==========");
     std::vector<parser::ast::abstract_syntax_tree_t *> *trees =
         parser::parse_tokens(tokens);
-
     for (parser::ast::abstract_syntax_tree_t *tree : *trees) {
       debug_print_ast(tree);
     }
 
+    // code generation
     fmt::println("========== LLVMIR CODE GENERATION ==========");
+    ast::codegen_visitor_t visitor = ast::codegen_visitor_t();
     for (parser::ast::abstract_syntax_tree_t *tree : *trees) {
-      ast::print_test_visitor_t visitor = ast::print_test_visitor_t();
+      // ast::print_test_visitor_t visitor = ast::print_test_visitor_t();
       tree->p_head->accept_visitor(&visitor);
     }
+    visitor.dump_ir();
     // Code generation finished
 
     // spdlog::info("Code generation finished");
