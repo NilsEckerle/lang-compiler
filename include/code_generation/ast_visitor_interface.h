@@ -4,6 +4,7 @@
 namespace compiler::parser::ast::node {
 class if_t;
 class else_t;
+class for_t;
 class while_t;
 class do_t;
 class return_t;
@@ -27,6 +28,7 @@ public:
 
   virtual void visit_if(compiler::parser::ast::node::if_t *t_if) = 0;
   virtual void visit_else(compiler::parser::ast::node::else_t *t_else) = 0;
+  virtual void visit_for(compiler::parser::ast::node::for_t *t_for) = 0;
   virtual void visit_while(compiler::parser::ast::node::while_t *t_while) = 0;
   virtual void visit_do(compiler::parser::ast::node::do_t *t_do) = 0;
   virtual void
