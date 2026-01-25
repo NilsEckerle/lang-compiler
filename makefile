@@ -1,4 +1,4 @@
-.PHONY: test build clean setup run
+.PHONY: test build clean setup run examples
 
 JOBS := $(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
 
@@ -27,3 +27,15 @@ debug: setup
 
 release: setup
 	cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . -j$(JOBS)
+
+examples: build
+	@echo "========== Running all examples =========="
+	@for file in examples/*.lang; do \
+		echo "========== Processing $$file =========="; \
+		./build/main "$$file"; \
+		echo ""; \
+	done
+
+example-%: build
+	@echo "========== Running examples/$*.lang =========="
+	./build/main examples/$*.lang
