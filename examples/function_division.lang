@@ -1,0 +1,12 @@
+int half(int number) {
+  int result = number / 2; // comment at end of line
+
+  return result;
+}
+
+int main () {
+  int i = 5;
+  i = half(i);
+
+  return i;
+} // comment at end of file
