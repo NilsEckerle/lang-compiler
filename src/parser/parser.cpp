@@ -6,6 +6,7 @@
 #include "tokens.h"
 #include <algorithm>
 #include <cassert>
+#include <fmt/base.h>
 #include <iostream>
 #include <string>
 #include <tuple>
@@ -19,6 +20,8 @@ namespace compiler::parser {
 
 static symbol_table::symbol_table_t *g_symbol_table = nullptr;
 
+ast::node::block_t *parse_block(std::vector<token_t *> &tokens);
+
 token_t *peek(std::vector<token_t *> &tokens, size_t n = 1) {
   assert(tokens.size() >= n + 1);
   return tokens.at(tokens.size() - n);
@@ -27,7 +30,10 @@ token_t *peek(std::vector<token_t *> &tokens, size_t n = 1) {
 void match(std::vector<token_t *> &tokens, token_e type) {
   token_t *tok = tokens.back();
   if (tok->e_tok_type != type) {
-    exceptions::parser_error("Token types didn't match", tok);
+    throw exceptions::parser_error(
+        fmt::format("Token type didn't match to type {}",
+                    token_t(type, "", -1).type_name()),
+        tok);
   }
   tokens.pop_back();
 }
@@ -51,6 +57,7 @@ token_e match_type(std::vector<token_t *> &tokens) {
   case tok_if:
   case tok_else:
   case tok_while:
+  case tok_for:
   case tok_return:
   case tok_plus:
   case tok_minus:
@@ -127,8 +134,8 @@ ast::node::variable_t *parse_define(std::vector<token_t *> &tokens) {
   return p_var;
 }
 
-ast::node::variable_t *parse_assign(std::vector<token_t *> &tokens) {
-  ast::node::variable_t *p_var = nullptr;
+ast::node::assign_expr_t *parse_assign(std::vector<token_t *> &tokens) {
+  ast::node::assign_expr_t *assign = nullptr;
 
   std::string id;
   ast::node::expression_t *expr = nullptr;
@@ -154,10 +161,13 @@ ast::node::variable_t *parse_assign(std::vector<token_t *> &tokens) {
 
   token_e type = g_symbol_table->get(id)->type;
   int pl = g_symbol_table->get(id)->pointer_level;
+  (void)type;
+  (void)pl;
+  // TODO: make sure the id is already in the simbol table
 
-  p_var = new ast::node::variable_t(type, pl, id, expr);
+  assign = new ast::node::assign_expr_t(id, expr);
 
-  return p_var;
+  return assign;
 }
 
 ast::node::statement_t *parse_statement(std::vector<token_t *> &tokens) {
@@ -186,11 +196,28 @@ ast::node::statement_t *parse_statement(std::vector<token_t *> &tokens) {
   //   break;
   // case tok_switch:
   // case tok_case:
-  // case tok_default:
-  // case tok_for:
-  // throw std::runtime_error("parse_statement not yet implemented");
+  case tok_for: {
+    // (
+    match(tokens, tok_lparen);
+    // stmt ;
+    ast::node::statement_t *p_first = parse_statement(tokens);
+    // match(tokens, tok_semicolon);
+    // expr ;
+    ast::node::expression_t *p_expr = parse_expression(tokens);
+    // stmt)
+    ast::node::statement_t *p_last = parse_statement(tokens);
+    // stmt
+    ast::node::block_t *p_block = parse_block(tokens);
+
+    p_stmt = new ast::node::for_t(p_first, p_expr, p_last, p_block);
+    break;
+  }
   case tok_return:
     p_stmt = new ast::node::return_t(parse_expression(tokens));
+    break;
+  case tok_id:
+    tokens.push_back(tok);
+    p_stmt = parse_assign(tokens);
     break;
   case tok_int:
   case tok_float:
@@ -199,10 +226,6 @@ ast::node::statement_t *parse_statement(std::vector<token_t *> &tokens) {
   case tok_bool:
     tokens.push_back(tok);
     p_stmt = parse_define(tokens);
-    break;
-  case tok_id:
-    tokens.push_back(tok);
-    p_stmt = parse_assign(tokens);
     break;
   case tok_eof:
   case tok_comment:
@@ -359,6 +382,7 @@ ast::node::node_t *parse_program(std::vector<token_t *> &tokens) {
   case tok_comment:
   case tok_if:
   case tok_else:
+  case tok_for:
   case tok_while:
   case tok_return:
   case tok_plus:

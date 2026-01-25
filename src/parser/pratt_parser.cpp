@@ -68,6 +68,7 @@ int get_precedence(token_e tok) {
   case tok_if:
   case tok_else:
   case tok_while:
+  case tok_for:
   case tok_return:
   case tok_lbrace:
   case tok_rbrace:
@@ -154,6 +155,7 @@ int next_op_pressidence(const std::vector<token_t *> &tokens) {
     case tok_if:
     case tok_else:
     case tok_while:
+    case tok_for:
     case tok_return:
     case tok_assign:
     case tok_lt:
@@ -302,6 +304,7 @@ parse_primary(std::vector<token_t *> &tokens, ParseContext context,
   case tok_if:
   case tok_else:
   case tok_while:
+  case tok_for:
   case tok_return:
   case tok_plus:
   case tok_minus:
