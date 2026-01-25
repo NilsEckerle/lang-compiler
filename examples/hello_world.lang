@@ -2,11 +2,12 @@
 // TODO: implement preprocessor
 //#include <stdio.h> // use c library
 
-int main (int argc, char *argv[]) {
-  let n_times = 5; // type: const int
+int main (int argc, char *argv) {
+  int n_times = 5; // type: const int
 
-  for (int i = 0; i < 5; i++) { // type: mutable int
-    printf("%d. Hello World\n", i+1);
+  for (int i = 0; i < n_times; i = i + 1) { // type: mutable int
+    //printf("%d. Hello World\n", i+1);
+    int jk = 5;
   }
 
   return 0;
