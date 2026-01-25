@@ -76,8 +76,8 @@ std::string token_t::type_name() {
   //   return "do";
   case tok_while:
     return "while";
-  // case tok_for:
-  //   return "for";
+  case tok_for:
+    return "for";
   // case tok_break:
   //   return "break";
   // case tok_continue:
