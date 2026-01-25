@@ -1,6 +1,7 @@
 #include "code_generation/print_test_visitor.h"
 #include "parser/abstract_syntax_tree.h"
 #include "tokens.h"
+#include <fmt/base.h>
 #include <iostream>
 
 using namespace compiler::ast;
@@ -19,6 +20,18 @@ void print_test_visitor_t::visit_else(
   printf("else ");
   t_else->p_stmt->accept_visitor(this);
   printf("\n");
+}
+
+void print_test_visitor_t::visit_for(
+    compiler::parser::ast::node::for_t *t_for) {
+  printf("for (");
+  t_for->p_first->accept_visitor(this);
+  printf(";");
+  t_for->p_expr->accept_visitor(this);
+  printf(";");
+  t_for->p_last->accept_visitor(this);
+  printf(") ");
+  t_for->p_block->accept_visitor(this);
 }
 
 void print_test_visitor_t::visit_while(

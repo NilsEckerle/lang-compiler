@@ -11,6 +11,8 @@ class print_test_visitor_t : public compiler::ast::visitor_t {
 
   void visit_else(compiler::parser::ast::node::else_t *t_else);
 
+  void visit_for(compiler::parser::ast::node::for_t *t_for);
+
   void visit_while(compiler::parser::ast::node::while_t *t_while);
 
   void visit_do(compiler::parser::ast::node::do_t *t_do);
