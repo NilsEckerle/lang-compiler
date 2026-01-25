@@ -63,6 +63,25 @@ std::string while_t::debug_print() const {
                      this->p_stmt->debug_print());
 }
 
+for_t::for_t(statement_t *p_first, expression_t *p_expr, statement_t *p_last,
+             block_t *p_block) {
+  this->p_first = p_first;
+  this->p_expr = p_expr;
+  this->p_last = p_last;
+  this->p_block = p_block;
+}
+for_t::~for_t() {
+  delete this->p_first;
+  delete this->p_expr;
+  delete this->p_last;
+  delete this->p_block;
+}
+std::string for_t::debug_print() const {
+  return fmt::format("for({0};{1};{2}){3}", this->p_first->debug_print(),
+                     this->p_expr->debug_print(), this->p_last->debug_print(),
+                     this->p_block->debug_print());
+}
+
 do_t::do_t(expression_t *p_expr, statement_t *p_stmt) {
   this->p_expr = p_expr;
   this->p_stmt = p_stmt;
@@ -97,7 +116,7 @@ function_t::~function_t() {
   free(this->block);
 }
 std::string function_t::debug_print() const {
-  return fmt::format("function({}, {}, {}, {})",
+  return fmt::format("function({}, {}, {}, {})\n",
                      create_token_t(this->type, "", -1)->type_name(),
                      this->pointer_level, this->identifier,
                      this->block->debug_print());
@@ -199,9 +218,9 @@ std::string block_t::debug_print() const {
   bool first = true;
   for (statement_t *stmt : this->statements) {
     if (first) {
-      s.append(fmt::format("statement({})", stmt->debug_print()));
+      s.append(fmt::format("\n\tstatement({})", stmt->debug_print()));
     } else {
-      s.append(fmt::format(", statement({})", stmt->debug_print()));
+      s.append(fmt::format(", \n\tstatement({})", stmt->debug_print()));
     }
     first = false;
   }

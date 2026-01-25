@@ -76,6 +76,21 @@ public:
   virtual void accept_visitor(visitor_t *visitor) { visitor->visit_else(this); }
 };
 
+class for_t : public statement_t {
+public:
+  for_t(statement_t *p_first, expression_t *p_expr, statement_t *p_last,
+        block_t *p_block);
+  ~for_t();
+  virtual std::string debug_print() const;
+  virtual void accept_visitor(visitor_t *visitor) { visitor->visit_for(this); }
+
+public:
+  statement_t *p_first;
+  expression_t *p_expr;
+  statement_t *p_last;
+  block_t *p_block;
+};
+
 class while_t : public statement_t {
 public:
   while_t(expression_t *p_expr, statement_t *p_statement);
@@ -160,7 +175,7 @@ public:
 };
 
 // assign expression node (e.g., a = b, x = 2 * 5 - y)
-class assign_expr_t : public expression_t {
+class assign_expr_t : public statement_t {
 public:
   assign_expr_t(std::string identifier, expression_t *right)
       : identifier(identifier), right(right) {}
