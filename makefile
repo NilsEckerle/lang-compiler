@@ -1,5 +1,7 @@
 .PHONY: test build clean setup run examples
 
+TARGET=lang-compiler
+
 JOBS := $(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
 
 default: build
@@ -9,9 +11,11 @@ setup:
 
 clean:
 	rm -rf build
+	rm $(TARGET)
 
 build: setup
 	cd build && cmake .. && cmake --build . -j$(JOBS)
+	cp build/main $(TARGET)
 
 rebuild: clean build
 
