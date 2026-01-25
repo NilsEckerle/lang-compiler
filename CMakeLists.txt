@@ -31,17 +31,28 @@ include_directories(${LLVM_INCLUDE_DIRS})
 separate_arguments(LLVM_DEFINITIONS_LIST NATIVE_COMMAND ${LLVM_DEFINITIONS})
 add_definitions(${LLVM_DEFINITIONS_LIST})
 
-# Map LLVM components to libraries
-llvm_map_components_to_libnames(llvm_libs 
-  core 
-  support 
-  irreader
-  target
-  x86codegen
-  x86asmparser
-  x86desc
-  x86info
+# Get LLVM library configuration
+# LLVM 21 uses a monolithic library, so we use llvm-config to get the correct flags
+execute_process(
+  COMMAND llvm-config --libs
+  OUTPUT_VARIABLE LLVM_LIBS
+  OUTPUT_STRIP_TRAILING_WHITESPACE
 )
+
+execute_process(
+  COMMAND llvm-config --ldflags
+  OUTPUT_VARIABLE LLVM_LDFLAGS
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+execute_process(
+  COMMAND llvm-config --system-libs
+  OUTPUT_VARIABLE LLVM_SYSTEM_LIBS
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+# Combine all LLVM linking flags
+set(llvm_libs ${LLVM_LDFLAGS} ${LLVM_LIBS} ${LLVM_SYSTEM_LIBS})
 
 ##################################################
 # THIRD PARTY LIBRARY
@@ -87,7 +98,8 @@ add_library(myproject_lib
   src/code_generation/print_test_visitor.cpp
   src/code_generation/codegen_visitor.cpp
 )
-target_link_libraries(myproject_lib PUBLIC spdlog)
+# Link LLVM libraries to myproject_lib
+target_link_libraries(myproject_lib PUBLIC spdlog ${llvm_libs})
 
 # Main executable
 add_executable(main
