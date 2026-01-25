@@ -215,7 +215,34 @@ create_unary_expression(token_t *op, ast::node::expression_t *operand,
 ast::node::expression_t *create_literal_expression(token_t *tok,
                                                    ParseContext context) {
   (void)context;
-  return new ast::node::literal_expr_t(tok->e_tok_type, tok->t_val);
+
+  // Convert string to appropriate type based on token type
+  switch (tok->e_tok_type) {
+  case token_e::tok_number: {
+    // Convert string to int
+    int value = std::stoi(tok->t_val);
+    return new ast::node::literal_expr_t(tok->e_tok_type, value);
+  }
+
+  case token_e::tok_float: {
+    // Convert string to float
+    float value = std::stof(tok->t_val);
+    return new ast::node::literal_expr_t(tok->e_tok_type, value);
+  }
+
+  case token_e::tok_char_literal: {
+    // Get the character (assuming it's already parsed correctly)
+    char value = tok->t_val[0];
+    return new ast::node::literal_expr_t(tok->e_tok_type, value);
+  }
+
+  case token_e::tok_string:
+  case token_e::tok_id:
+  default: {
+    // Keep as string for identifiers and string literals
+    return new ast::node::literal_expr_t(tok->e_tok_type, tok->t_val);
+  }
+  }
 }
 
 /**
@@ -271,9 +298,10 @@ parse_primary(std::vector<token_t *> &tokens, ParseContext context,
 
       // Parse arguments
       while (!tokens.empty() && peek(tokens)->e_tok_type != tok_rparen) {
-        std::cout << "loop" << std::endl;
+        std::cout << debug_tok(tokens.back()) << std::endl;
         arguments.push_back(
             parse_expression(tokens, p_symbol_table, 0, context));
+        std::cout << debug_tok(tokens.back()) << std::endl;
 
         // Check for comma (more arguments)
         if (!tokens.empty() && peek(tokens)->e_tok_type == tok_comma) {
@@ -351,6 +379,9 @@ parse_expression(std::vector<token_t *> &tokens,
     // Stop if we hit an expression delimiter or EOF
     if (is_expression_delimiter(next_tok->e_tok_type) ||
         next_tok->e_tok_type == tok_eof) {
+      if (peek(tokens, 2)->e_tok_type == tok_semicolon) {
+        break;
+      }
       consume(tokens);
       break;
     }
