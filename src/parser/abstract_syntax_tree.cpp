@@ -1,7 +1,7 @@
 #include "parser/abstract_syntax_tree.h"
 #include "code_generation/ast_visitor_interface.h"
+#include "spdlog/fmt/bundled/format.h"
 #include "tokens.h"
-#include <fmt/format.h>
 #include <string>
 
 // Helper function to convert variant to string

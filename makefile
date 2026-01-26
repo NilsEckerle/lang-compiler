@@ -11,7 +11,7 @@ setup:
 
 clean:
 	rm -rf build
-	rm $(TARGET)
+	rm -f $(TARGET)
 
 build: setup
 	cd build && cmake .. && cmake --build . -j$(JOBS)

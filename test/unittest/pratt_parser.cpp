@@ -1,8 +1,6 @@
 #include "parser/pratt_parser.h"
 #include "exceptions.h"
 #include "parser/abstract_syntax_tree.h"
-#include "parser/syntax_tree.h"
-#include "symbol_table.h"
 #include "tokens.h"
 #include <gtest/gtest.h>
 #include <string>

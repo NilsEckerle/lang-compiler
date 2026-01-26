@@ -31,28 +31,31 @@ include_directories(${LLVM_INCLUDE_DIRS})
 separate_arguments(LLVM_DEFINITIONS_LIST NATIVE_COMMAND ${LLVM_DEFINITIONS})
 add_definitions(${LLVM_DEFINITIONS_LIST})
 
-# Get LLVM library configuration
-# LLVM 21 uses a monolithic library, so we use llvm-config to get the correct flags
-execute_process(
-  COMMAND llvm-config --libs
-  OUTPUT_VARIABLE LLVM_LIBS
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+# Disable -Wunused-parameter for LLVM headers
+if(NOT MSVC)
+  add_compile_options(-Wno-unused-parameter)
+endif()
 
-execute_process(
-  COMMAND llvm-config --ldflags
-  OUTPUT_VARIABLE LLVM_LDFLAGS
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+# Arch uses monolithic LLVM, Debian uses component libraries
+if(EXISTS "/etc/arch-release")
+  # Arch Linux - use monolithic library
+  message(STATUS "Detected Arch Linux - using monolithic LLVM")
+  set(llvm_libs LLVM)
+else()
+  # Debian/other - use component libraries
+  message(STATUS "Using LLVM component libraries")
+  llvm_map_components_to_libnames(llvm_libs
+    Core
+    Support
+    IRReader
+    ExecutionEngine
+    Target
+    MCJIT
+    native
+  )
+endif()
 
-execute_process(
-  COMMAND llvm-config --system-libs
-  OUTPUT_VARIABLE LLVM_SYSTEM_LIBS
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
-# Combine all LLVM linking flags
-set(llvm_libs ${LLVM_LDFLAGS} ${LLVM_LIBS} ${LLVM_SYSTEM_LIBS})
+message(STATUS "LLVM libraries: ${llvm_libs}")
 
 ##################################################
 # THIRD PARTY LIBRARY
@@ -92,7 +95,6 @@ add_library(myproject_lib
   src/lexer/lexer.cpp
   src/parser/parser.cpp
   src/parser/pratt_parser.cpp
-  src/parser/syntax_tree.cpp
   src/parser/abstract_syntax_tree.cpp
   src/symbol_table.cpp
   src/code_generation/print_test_visitor.cpp
@@ -107,7 +109,7 @@ add_executable(main
 )
 
 # Link to main executable
-target_link_libraries(main PRIVATE myproject_lib argparse fmt)
+target_link_libraries(main PRIVATE myproject_lib argparse)
 # target_link_libraries(main PRIVATE myproject_lib fmt)
 
 ##################################################
@@ -136,7 +138,6 @@ target_link_libraries(tests
   myproject_lib
   gtest_main
   spdlog
-  fmt
 )
 
 # Discover tests

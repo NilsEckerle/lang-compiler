@@ -4,7 +4,6 @@
 #include "lexer/lexer.h"
 #include "parser/abstract_syntax_tree.h"
 #include "parser/parser.h"
-#include "spdlog/fmt/bundled/base.h"
 #include "spdlog/spdlog.h"
 #include "tokens.h"
 #include <cstdlib>

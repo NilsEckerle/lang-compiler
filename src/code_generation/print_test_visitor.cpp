@@ -1,7 +1,6 @@
 #include "code_generation/print_test_visitor.h"
 #include "parser/abstract_syntax_tree.h"
 #include "tokens.h"
-#include <fmt/base.h>
 #include <iostream>
 
 using namespace compiler::ast;

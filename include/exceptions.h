@@ -2,8 +2,8 @@
 #define EXCEPTIONS_H
 
 // #include "spdlog/fmt/fmt.h"
-#include "fmt/format.h"
 #include "parser/abstract_syntax_tree.h"
+#include "spdlog/fmt/bundled/format.h"
 #include "tokens.h"
 #include <exception>
 #include <string>

@@ -2,12 +2,11 @@
 #include "exceptions.h"
 #include "parser/abstract_syntax_tree.h"
 #include "parser/pratt_parser.h"
+#include "spdlog/fmt/bundled/format.h"
 #include "symbol_table.h"
 #include "tokens.h"
 #include <algorithm>
 #include <cassert>
-#include <fmt/base.h>
-#include <iostream>
 #include <string>
 #include <tuple>
 #include <vector>
