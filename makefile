@@ -3,6 +3,7 @@
 TARGET=lang-compiler
 
 JOBS := $(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
+DOCS_DIR = docs
 
 default: build
 
@@ -43,3 +44,15 @@ examples: build
 example-%: build
 	@echo "========== Running examples/$*.lang =========="
 	./build/main examples/$*.lang
+
+clean_documentation:
+	@rm -rf $(DOCS_DIR)
+
+documentation:
+	@mkdir -p $(DOCS_DIR)
+	cd res && doxygen Doxyfile
+
+show_documentation: documentation
+	cd docs && firefox index.html
+	
+
