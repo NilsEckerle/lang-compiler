@@ -23,14 +23,20 @@ protected:
 TEST_F(parser_unit_test, parse_tokens_global_expression) {
   std::vector<token_t *> tokens; // int number = 3 + 4 * 5;
   tokens.push_back(create_token_t(tok_int, "int", 1));
+  tokens.push_back(create_token_t(tok_id, "main", 1));
+  tokens.push_back(create_token_t(tok_lparen, "(", 1));
+  tokens.push_back(create_token_t(tok_rparen, ")", 1));
+  tokens.push_back(create_token_t(tok_lbrace, "{", 1));
+  tokens.push_back(create_token_t(tok_int, "int", 1));
   tokens.push_back(create_token_t(tok_id, "number", 1));
-  tokens.push_back(create_token_t(compiler::tok_assign, "assign", 1));
+  tokens.push_back(create_token_t(tok_assign, "assign", 1));
   tokens.push_back(create_token_t(tok_number, "3", 1));
   tokens.push_back(create_token_t(tok_plus, "plus", 1));
   tokens.push_back(create_token_t(tok_number, "4", 1));
   tokens.push_back(create_token_t(tok_star, "star", 1));
   tokens.push_back(create_token_t(tok_number, "5", 1));
-  tokens.push_back(create_token_t(compiler::tok_semicolon, "semicolon", 1));
+  tokens.push_back(create_token_t(tok_semicolon, "semicolon", 1));
+  tokens.push_back(create_token_t(tok_rbrace, "}", 1));
 
   std::string expected = "(plus (number 3) (star (number 4) (number 5)))";
   std::vector<parser::ast::abstract_syntax_tree_t *> *trees =
