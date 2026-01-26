@@ -5,3 +5,4 @@ lang
 .cache/
 compile_commands.json
 .DS_Store
+lang-compiler
