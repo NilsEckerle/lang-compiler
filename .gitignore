@@ -6,3 +6,4 @@ lang
 compile_commands.json
 .DS_Store
 lang-compiler
+prebuild_lang-compiler
