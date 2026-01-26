@@ -1,0 +1,418 @@
+/* Gruvbox Dark Theme for Doxygen - Minimal (Colors Only) */
+/* Based on the Gruvbox color scheme by morhetz */
+
+/* Color palette from Gruvbox */
+:root {
+  /* Dark colors */
+  --gb-dark0-hard: #1d2021;
+  --gb-dark0: #282828;
+  --gb-dark0-soft: #32302f;
+  --gb-dark1: #3c3836;
+  --gb-dark2: #504945;
+  --gb-dark3: #665c54;
+  --gb-dark4: #7c6f64;
+  
+  /* Light colors */
+  --gb-light0-hard: #f9f5d7;
+  --gb-light0: #fbf1c7;
+  --gb-light0-soft: #f2e5bc;
+  --gb-light1: #ebdbb2;
+  --gb-light2: #d5c4a1;
+  --gb-light3: #bdae93;
+  --gb-light4: #a89984;
+  
+  /* Gray */
+  --gb-gray: #928374;
+  
+  /* Bright colors */
+  --gb-bright-red: #fb4934;
+  --gb-bright-green: #b8bb26;
+  --gb-bright-yellow: #fabd2f;
+  --gb-bright-blue: #83a598;
+  --gb-bright-purple: #d3869b;
+  --gb-bright-aqua: #8ec07c;
+  --gb-bright-orange: #fe8019;
+  
+  /* Neutral colors */
+  --gb-neutral-red: #cc241d;
+  --gb-neutral-green: #98971a;
+  --gb-neutral-yellow: #d79921;
+  --gb-neutral-blue: #458588;
+  --gb-neutral-purple: #b16286;
+  --gb-neutral-aqua: #689d6a;
+  --gb-neutral-orange: #d65d0e;
+}
+
+/* Base styles */
+body {
+  background: var(--gb-dark0) !important;
+  color: var(--gb-light1) !important;
+}
+
+/* Main content area */
+.contents {
+  background: var(--gb-dark0) !important;
+  color: var(--gb-light1) !important;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6, .title {
+  color: var(--gb-bright-green) !important;
+  border-bottom-color: var(--gb-dark2) !important;
+}
+
+h1 { color: var(--gb-bright-yellow) !important; }
+h2 { color: var(--gb-bright-green) !important; }
+h3, h4 { color: var(--gb-bright-aqua) !important; }
+h5, h6 { color: var(--gb-bright-blue) !important; }
+
+/* Links */
+a, a:link, a:visited {
+  color: var(--gb-bright-blue) !important;
+}
+
+a:hover {
+  color: var(--gb-bright-aqua) !important;
+}
+
+/* Code blocks and inline code */
+div.fragment, pre.fragment {
+  background: var(--gb-dark1) !important;
+  border-color: var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+}
+
+.line {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border: none !important;
+}
+
+code, tt {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border-color: var(--gb-dark3) !important;
+}
+
+/* Syntax highlighting for code */
+span.keyword {
+  color: var(--gb-bright-red) !important;
+}
+
+span.keywordtype {
+  color: var(--gb-bright-yellow) !important;
+}
+
+span.keywordflow {
+  color: var(--gb-bright-red) !important;
+}
+
+span.comment {
+  color: var(--gb-gray) !important;
+}
+
+span.preprocessor {
+  color: var(--gb-bright-aqua) !important;
+}
+
+span.stringliteral {
+  color: var(--gb-bright-green) !important;
+}
+
+/* Line numbers in code blocks */
+span.lineno, .lineno {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-gray) !important;
+  border-right-color: var(--gb-dark3) !important;
+}
+
+span.lineno a, .lineno a {
+  background: transparent !important;
+  color: var(--gb-gray) !important;
+}
+
+/* Top navigation and header */
+#top, #titlearea, .header {
+  background: var(--gb-dark1) !important;
+  border-bottom-color: var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+}
+
+/* Main navigation bar */
+#main-nav, .sm-dox {
+  background: var(--gb-dark1) !important;
+  border-bottom-color: var(--gb-dark3) !important;
+}
+
+.sm-dox a {
+  background: transparent !important;
+  color: var(--gb-light2) !important;
+}
+
+.sm-dox a:hover {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-aqua) !important;
+}
+
+.sm-dox ul {
+  background: var(--gb-dark1) !important;
+  border-color: var(--gb-dark3) !important;
+}
+
+/* File page headers */
+div.header {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border-bottom-color: var(--gb-dark3) !important;
+}
+
+.summary {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light2) !important;
+}
+
+.tabs, .tabs2, .tabs3 {
+  background: var(--gb-dark1) !important;
+  border-bottom-color: var(--gb-dark3) !important;
+}
+
+.tablist a {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-light2) !important;
+  border-right-color: var(--gb-dark3) !important;
+}
+
+.tablist a:hover,
+.tablist li.current a {
+  background: var(--gb-bright-orange) !important;
+  color: var(--gb-dark0) !important;
+}
+
+/* Navigation tree */
+#nav-tree, #nav-tree-contents {
+  background: var(--gb-dark1) !important;
+  border-right-color: var(--gb-dark3) !important;
+  color: var(--gb-light2) !important;
+}
+
+#nav-tree .selected {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-yellow) !important;
+}
+
+#nav-tree a {
+  color: var(--gb-light2) !important;
+  background: transparent !important;
+}
+
+#nav-tree a:hover {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-aqua) !important;
+}
+
+/* Sidebar elements */
+#side-nav, .ui-resizable-e {
+  background: var(--gb-dark1) !important;
+}
+
+/* Search */
+#MSearchBox {
+  background: var(--gb-dark2) !important;
+  border-color: var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+}
+
+#MSearchSelectWindow {
+  background: var(--gb-dark1) !important;
+  border-color: var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+}
+
+#MSearchResultsWindow {
+  background: var(--gb-dark1) !important;
+  border-color: var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+}
+
+.SelectItem:hover {
+  background: var(--gb-dark2) !important;
+}
+
+/* Tables */
+table.doxtable, table.markdownTable {
+  background: var(--gb-dark1) !important;
+  border-color: var(--gb-dark3) !important;
+}
+
+table.doxtable th, table.markdownTable th {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-yellow) !important;
+  border-color: var(--gb-dark3) !important;
+}
+
+table.doxtable td, table.markdownTable td {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border-color: var(--gb-dark3) !important;
+}
+
+table.doxtable tr:nth-child(even) td {
+  background: var(--gb-dark0-soft) !important;
+}
+
+/* Member documentation */
+.memitem, .memproto, .memdoc {
+  background: var(--gb-dark1) !important;
+  border-color: var(--gb-dark3) !important;
+}
+
+.memtitle {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-yellow) !important;
+  border-bottom-color: var(--gb-dark3) !important;
+}
+
+.memproto {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+}
+
+.memdoc {
+  background: var(--gb-dark0-soft) !important;
+  color: var(--gb-light1) !important;
+}
+
+.memname {
+  color: var(--gb-bright-aqua) !important;
+}
+
+.paramname {
+  color: var(--gb-bright-purple) !important;
+}
+
+/* Directory listing */
+.directory {
+  background: var(--gb-dark1) !important;
+  border-color: var(--gb-dark3) !important;
+}
+
+.directory td {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border-bottom-color: var(--gb-dark2) !important;
+}
+
+.directory tr:hover td {
+  background: var(--gb-dark2) !important;
+}
+
+.directory .arrow {
+  color: var(--gb-bright-orange) !important;
+}
+
+/* Note, warning, and other admonitions */
+dl.note dt {
+  background: var(--gb-neutral-blue) !important;
+  color: var(--gb-light0) !important;
+}
+
+dl.note dd {
+  background: rgba(69, 133, 136, 0.1) !important;
+  border-color: var(--gb-neutral-blue) !important;
+  color: var(--gb-light1) !important;
+}
+
+dl.warning dt {
+  background: var(--gb-neutral-orange) !important;
+  color: var(--gb-light0) !important;
+}
+
+dl.warning dd {
+  background: rgba(214, 93, 14, 0.1) !important;
+  border-color: var(--gb-neutral-orange) !important;
+  color: var(--gb-light1) !important;
+}
+
+dl.todo dt {
+  background: var(--gb-neutral-aqua) !important;
+  color: var(--gb-light0) !important;
+}
+
+dl.todo dd {
+  background: rgba(104, 157, 106, 0.1) !important;
+  border-color: var(--gb-neutral-aqua) !important;
+  color: var(--gb-light1) !important;
+}
+
+dl.deprecated dt {
+  background: var(--gb-neutral-purple) !important;
+  color: var(--gb-light0) !important;
+}
+
+dl.deprecated dd {
+  background: rgba(177, 98, 134, 0.1) !important;
+  border-color: var(--gb-neutral-purple) !important;
+  color: var(--gb-light1) !important;
+}
+
+/* Footer */
+#nav-path {
+  background: var(--gb-dark1) !important;
+  border-top-color: var(--gb-dark3) !important;
+}
+
+#nav-path ul {
+  background: transparent !important;
+  color: var(--gb-light2) !important;
+}
+
+.navpath li.footer {
+  color: var(--gb-gray) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar-track {
+  background: var(--gb-dark1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gb-dark3);
+  border-color: var(--gb-dark1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gb-dark4);
+}
+
+/* Special elements */
+.highlighted {
+  background: var(--gb-bright-yellow) !important;
+  color: var(--gb-dark0) !important;
+}
+
+/* Doxygen-specific elements */
+.textblock {
+  color: var(--gb-light1) !important;
+}
+
+.groupheader {
+  color: var(--gb-bright-green) !important;
+  border-bottom-color: var(--gb-dark2) !important;
+}
+
+/* Class/struct member tables */
+.memberdecls {
+  background: var(--gb-dark1) !important;
+  border-color: var(--gb-dark3) !important;
+}
+
+.mdescLeft, .mdescRight, .memItemLeft, .memItemRight {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border-color: var(--gb-dark3) !important;
+}
+
+.memSeparator {
+  background: var(--gb-dark2) !important;
+  border: none;
+}

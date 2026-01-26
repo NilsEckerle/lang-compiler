@@ -1,0 +1,527 @@
+/* Gruvbox Dark Theme for Doxygen */
+/* Based on the Gruvbox color scheme by morhetz */
+
+/* Color palette from Gruvbox */
+:root {
+  /* Dark colors */
+  --gb-dark0-hard: #1d2021;
+  --gb-dark0: #282828;
+  --gb-dark0-soft: #32302f;
+  --gb-dark1: #3c3836;
+  --gb-dark2: #504945;
+  --gb-dark3: #665c54;
+  --gb-dark4: #7c6f64;
+  
+  /* Light colors */
+  --gb-light0-hard: #f9f5d7;
+  --gb-light0: #fbf1c7;
+  --gb-light0-soft: #f2e5bc;
+  --gb-light1: #ebdbb2;
+  --gb-light2: #d5c4a1;
+  --gb-light3: #bdae93;
+  --gb-light4: #a89984;
+  
+  /* Gray */
+  --gb-gray: #928374;
+  
+  /* Bright colors */
+  --gb-bright-red: #fb4934;
+  --gb-bright-green: #b8bb26;
+  --gb-bright-yellow: #fabd2f;
+  --gb-bright-blue: #83a598;
+  --gb-bright-purple: #d3869b;
+  --gb-bright-aqua: #8ec07c;
+  --gb-bright-orange: #fe8019;
+  
+  /* Neutral colors */
+  --gb-neutral-red: #cc241d;
+  --gb-neutral-green: #98971a;
+  --gb-neutral-yellow: #d79921;
+  --gb-neutral-blue: #458588;
+  --gb-neutral-purple: #b16286;
+  --gb-neutral-aqua: #689d6a;
+  --gb-neutral-orange: #d65d0e;
+}
+
+
+/* Base styles */
+body {
+  background: var(--gb-dark0) !important;
+  color: var(--gb-light1) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Main content area */
+.contents {
+  background: var(--gb-dark0) !important;
+  color: var(--gb-light1) !important;
+  margin: 10px auto !important;
+  padding: 0 20px;
+  max-width: 1200px;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6, .title {
+  color: var(--gb-bright-green) !important;
+  border-bottom: 1px solid var(--gb-dark2);
+  padding-bottom: 5px;
+}
+
+h1 { color: var(--gb-bright-yellow) !important; }
+h2 { color: var(--gb-bright-green) !important; }
+h3, h4 { color: var(--gb-bright-aqua) !important; }
+h5, h6 { color: var(--gb-bright-blue) !important; }
+
+/* Links */
+a, a:link, a:visited {
+  color: var(--gb-bright-blue) !important;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--gb-bright-aqua) !important;
+  text-decoration: underline;
+}
+
+a.el {
+	font-weight: normal;
+	/* font-size: 1.5em */
+}
+
+/* Code blocks and inline code */
+div.fragment, pre.fragment {
+  background: var(--gb-dark1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 8px 0;
+}
+
+.line {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border: none !important;
+  padding: 2px !important;
+  padding-left: 8px !important;
+  margin: 0 !important;
+}
+
+/* Remove alternating line backgrounds in code blocks */
+.line:nth-child(even) {
+  background: var(--gb-dark1) !important;
+}
+
+.line:nth-child(odd) {
+  background: var(--gb-dark1) !important;
+}
+
+code, tt {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  padding: 2px 4px;
+  border-radius: 3px;
+  border: 1px solid var(--gb-dark3);
+}
+
+/* Syntax highlighting for code */
+span.keyword {
+  color: var(--gb-bright-red) !important;
+  font-weight: bold;
+}
+
+span.keywordtype {
+  color: var(--gb-bright-yellow) !important;
+  font-weight: bold;
+}
+
+span.keywordflow {
+  color: var(--gb-bright-red) !important;
+  font-style: italic;
+}
+
+span.comment {
+  color: var(--gb-gray) !important;
+  font-style: italic;
+}
+
+span.preprocessor {
+  color: var(--gb-bright-aqua) !important;
+}
+
+span.stringliteral {
+  color: var(--gb-bright-green) !important;
+}
+
+/* Line numbers in code blocks */
+span.lineno, .lineno {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-gray) !important;
+  border-right: 1px solid var(--gb-dark3) !important;
+  padding-right: 8px !important;
+  margin-right: 8px !important;
+}
+
+span.lineno a, .lineno a {
+  background: transparent !important;
+  color: var(--gb-gray) !important;
+  text-decoration: none !important;
+}
+
+/* Top navigation and header */
+#top, #titlearea, .header {
+  background: var(--gb-dark1) !important;
+  border-bottom: 1px solid var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+}
+
+/* Main navigation bar */
+#main-nav, .sm-dox {
+  background: var(--gb-dark1) !important;
+  border-bottom: 1px solid var(--gb-dark3) !important;
+}
+
+.sm-dox a {
+  background: transparent !important;
+  color: var(--gb-light2) !important;
+  text-shadow: none !important;
+}
+
+.sm-dox a:hover {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-aqua) !important;
+}
+
+.sm-dox ul {
+  background: var(--gb-dark1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+  box-shadow: none !important;
+}
+
+/* File page headers */
+div.header {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border-bottom: 1px solid var(--gb-dark3) !important;
+  padding: 10px;
+}
+
+.summary {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light2) !important;
+}
+
+.tabs, .tabs2, .tabs3 {
+  background: var(--gb-dark1) !important;
+  border-bottom: 1px solid var(--gb-dark3) !important;
+}
+
+.tablist li {
+  background: transparent !important;
+}
+
+.tablist a {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-light2) !important;
+  border-right: 1px solid var(--gb-dark3) !important;
+  border-radius: 4px 4px 0 0;
+  padding: 8px 16px;
+}
+
+.tablist a:hover,
+.tablist li.current a {
+  background: var(--gb-bright-orange) !important;
+  color: var(--gb-dark0) !important;
+  text-decoration: none;
+}
+
+/* Navigation tree */
+#nav-tree, #nav-tree-contents {
+  background: var(--gb-dark1) !important;
+  border-right: 1px solid var(--gb-dark3) !important;
+  color: var(--gb-light2) !important;
+}
+
+#nav-tree .selected {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-yellow) !important;
+}
+
+#nav-tree a {
+  color: var(--gb-light2) !important;
+  background: transparent !important;
+}
+
+#nav-tree a:hover {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-aqua) !important;
+}
+
+/* Sidebar elements */
+#side-nav, .ui-resizable-e {
+  background: var(--gb-dark1) !important;
+}
+
+/* Search */
+#MSearchBox {
+  background: var(--gb-dark2) !important;
+  border: 1px solid var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+}
+
+#MSearchSelectWindow {
+  background: var(--gb-dark1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+}
+
+#MSearchResultsWindow {
+  background: var(--gb-dark1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+  color: var(--gb-light1) !important;
+}
+
+.SelectItem:hover {
+  background: var(--gb-dark2) !important;
+}
+
+/* Tables */
+table.doxtable, table.markdownTable {
+  background: var(--gb-dark1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+  border-collapse: collapse;
+}
+
+table.doxtable th, table.markdownTable th {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-yellow) !important;
+  border: 1px solid var(--gb-dark3) !important;
+  padding: 8px;
+}
+
+table.doxtable td, table.markdownTable td {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+  padding: 8px;
+}
+
+table.doxtable tr:nth-child(even) td {
+  background: var(--gb-dark0-soft) !important;
+}
+
+/* Member documentation */
+.memitem, .memproto, .memdoc {
+  background: var(--gb-dark1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+.memtitle {
+  background: var(--gb-dark2) !important;
+  color: var(--gb-bright-yellow) !important;
+  border-bottom: 1px solid var(--gb-dark3) !important;
+  padding: 8px;
+  font-weight: bold;
+}
+
+.memproto {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  padding: 8px;
+  font-family: 'Courier New', monospace;
+}
+
+.memdoc {
+  background: var(--gb-dark0-soft) !important;
+  color: var(--gb-light1) !important;
+  padding: 16px;
+}
+
+.memname {
+  color: var(--gb-bright-aqua) !important;
+  font-weight: bold;
+}
+
+.paramname {
+  color: var(--gb-bright-purple) !important;
+  font-style: italic;
+}
+
+/* Directory listing */
+.directory {
+  background: var(--gb-dark1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+}
+
+.directory td {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border-bottom: 1px solid var(--gb-dark2) !important;
+  padding: 4px 8px;
+}
+
+.directory tr:hover td {
+  background: var(--gb-dark2) !important;
+}
+
+.directory .arrow {
+  color: var(--gb-bright-orange) !important;
+}
+
+/* Note, warning, and other admonitions */
+dl.note, dl.warning, dl.todo, dl.deprecated, dl.reflist {
+  border: none;
+  border-radius: 4px;
+  margin: 16px 0;
+  overflow: hidden;
+}
+
+dl.note dt {
+  background: var(--gb-neutral-blue) !important;
+  color: var(--gb-light0) !important;
+}
+
+dl.note dd {
+  background: rgba(69, 133, 136, 0.1) !important;
+  border: 1px solid var(--gb-neutral-blue) !important;
+  border-top: none;
+  color: var(--gb-light1) !important;
+}
+
+dl.warning dt {
+  background: var(--gb-neutral-orange) !important;
+  color: var(--gb-light0) !important;
+}
+
+dl.warning dd {
+  background: rgba(214, 93, 14, 0.1) !important;
+  border: 1px solid var(--gb-neutral-orange) !important;
+  border-top: none;
+  color: var(--gb-light1) !important;
+}
+
+dl.todo dt {
+  background: var(--gb-neutral-aqua) !important;
+  color: var(--gb-light0) !important;
+}
+
+dl.todo dd {
+  background: rgba(104, 157, 106, 0.1) !important;
+  border: 1px solid var(--gb-neutral-aqua) !important;
+  border-top: none;
+  color: var(--gb-light1) !important;
+}
+
+dl.deprecated dt {
+  background: var(--gb-neutral-purple) !important;
+  color: var(--gb-light0) !important;
+}
+
+dl.deprecated dd {
+  background: rgba(177, 98, 134, 0.1) !important;
+  border: 1px solid var(--gb-neutral-purple) !important;
+  border-top: none;
+  color: var(--gb-light1) !important;
+}
+
+/* Footer */
+#nav-path {
+  background: var(--gb-dark1) !important;
+  border-top: 1px solid var(--gb-dark3) !important;
+}
+
+#nav-path ul {
+  background: transparent !important;
+  color: var(--gb-light2) !important;
+}
+
+.navpath li.footer {
+  color: var(--gb-gray) !important;
+  text-align: center;
+  /* font-size: 0.9em; */
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gb-dark1);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gb-dark3);
+  border-radius: 6px;
+  border: 2px solid var(--gb-dark1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gb-dark4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .contents {
+    margin: 0 !important;
+    padding: 0 10px !important;
+  }
+  
+  #nav-tree {
+    display: none;
+  }
+  
+  .tablist a {
+    padding: 6px 12px;
+    /* font-size: 0.9em; */
+  }
+}
+
+/* Special elements */
+.highlighted {
+  background: var(--gb-bright-yellow) !important;
+  color: var(--gb-dark0) !important;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* Doxygen-specific elements */
+.textblock {
+  color: var(--gb-light1) !important;
+}
+
+.groupheader {
+  color: var(--gb-bright-green) !important;
+  font-weight: bold;
+  margin-top: 20px;
+  border-bottom: 2px solid var(--gb-dark2);
+  padding-bottom: 4px;
+}
+
+/* Image styling */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Class/struct member tables */
+.memberdecls {
+  background: var(--gb-dark1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+}
+
+.mdescLeft, .mdescRight, .memItemLeft, .memItemRight {
+  background: var(--gb-dark1) !important;
+  color: var(--gb-light1) !important;
+  border: 1px solid var(--gb-dark3) !important;
+}
+
+.memSeparator {
+  background: var(--gb-dark2) !important;
+  height: 1px;
+  border: none;
+}
