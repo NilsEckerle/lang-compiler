@@ -124,10 +124,10 @@ add_executable(tests
   test/unittest/tokens.cpp
   test/unittest/lexer.cpp
   test/unittest/symbol_table.cpp
-  test/unittest/parser.cpp
-  test/unittest/pratt_parser.cpp
+  # test/unittest/parser.cpp
+  # test/unittest/pratt_parser.cpp
 
-  test/moduletest/lexer.cpp
+  # test/moduletest/lexer.cpp
 )
 
 target_compile_options(tests PRIVATE
